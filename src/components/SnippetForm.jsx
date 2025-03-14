@@ -34,6 +34,7 @@ const SnippetForm = ({ onSave, languages, onAddLanguage }) => {
         }
         onSave({ title, language, code });
         setTitle("");
+        setLanguage("");
         setCode("");
     };
 
