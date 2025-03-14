@@ -1,6 +1,6 @@
 import { useState } from "react";
-import SnippetForm from "./SnippetForm";
-import SnippetList from "./SnippetList";
+import SnippetForm from "./components/SnippetForm";
+import SnippetList from "./components/SnippetList";
 
 function App() {
   const [snippets, setSnippets] = useState([]);
@@ -27,6 +27,7 @@ function App() {
       <div className="App-header">
         <div style={{ width: "50%", margin: "auto", paddingTop: "20px" }}>
           <h2>Code Snippet Manager</h2>
+          <p><em>Save your source code snippets in any programming language in one place</em></p>
           <SnippetForm onSave={addSnippet} languages={languages} onAddLanguage={addLanguage} />
           <SnippetList snippets={snippets} onDelete={deleteSnippet} />
         </div>
