@@ -2,6 +2,8 @@ import { useState } from "react";
 import SnippetForm from "./components/SnippetForm";
 import SnippetList from "./components/SnippetList";
 
+// Project idea created by ChatGPT and modified by Cursor
+// https://chatgpt.com/share/67d3a2dc-7214-8000-b4e3-f67597b45c66
 function App() {
   const [snippets, setSnippets] = useState([]);
   const [languages, setLanguages] = useState([]);
