@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TextField, Button } from "@mui/material";
 
 // Form for code snippet creation
-const SnippetForm = ({ onSave, languages, onAddLanguage }) => {
+const SnippetForm = ({ onSave, languages, onAddLanguage, isDarkMode }) => {
     const [title, setTitle] = useState("");
     const [language, setLanguage] = useState("");
     const [code, setCode] = useState("");
@@ -46,7 +46,21 @@ const SnippetForm = ({ onSave, languages, onAddLanguage }) => {
                 value={title} 
                 onChange={(e) => setTitle(e.target.value)} 
                 placeholder="Enter a title for the snippet"
-                required 
+                required
+                sx={{
+                    '& .MuiInputLabel-root': {
+                        color: isDarkMode ? '#ffffff' : '#000000',
+                    },
+                    '& .MuiOutlinedInput-root': {
+                        color: isDarkMode ? '#ffffff' : '#000000',
+                        '& fieldset': {
+                            borderColor: isDarkMode ? '#ffffff' : '#000000',
+                        },
+                        '&:hover fieldset': {
+                            borderColor: isDarkMode ? '#ffffff' : '#000000',
+                        },
+                    }
+                }}
             />
             <TextField
                 label="Language"
@@ -54,6 +68,20 @@ const SnippetForm = ({ onSave, languages, onAddLanguage }) => {
                 onChange={(e) => setLanguage(e.target.value)}
                 placeholder="Enter a programming language (e.g. JavaScript, Python, Java, etc.)"
                 required
+                sx={{
+                    '& .MuiInputLabel-root': {
+                        color: isDarkMode ? '#ffffff' : '#000000',
+                    },
+                    '& .MuiOutlinedInput-root': {
+                        color: isDarkMode ? '#ffffff' : '#000000',
+                        '& fieldset': {
+                            borderColor: isDarkMode ? '#ffffff' : '#000000',
+                        },
+                        '&:hover fieldset': {
+                            borderColor: isDarkMode ? '#ffffff' : '#000000',
+                        },
+                    }
+                }}
             />
             <TextField
                 label="Code Snippet"
@@ -66,13 +94,35 @@ const SnippetForm = ({ onSave, languages, onAddLanguage }) => {
                 placeholder="Enter code here"
                 required
                 sx={{
-                    '& .MuiInputBase-root': {
+                    '& .MuiInputLabel-root': {
+                        color: isDarkMode ? '#ffffff' : '#000000',
+                    },
+                    '& .MuiOutlinedInput-root': {
+                        color: isDarkMode ? '#ffffff' : '#000000',
+                        '& fieldset': {
+                            borderColor: isDarkMode ? '#ffffff' : '#000000',
+                        },
+                        '&:hover fieldset': {
+                            borderColor: isDarkMode ? '#ffffff' : '#000000',
+                        },
                         fontFamily: 'monospace',
                         fontSize: '14px',
                     }
                 }}
             />
-            <Button type="submit" variant="contained">Save</Button>
+            <Button 
+                type="submit" 
+                variant="contained"
+                sx={{
+                    backgroundColor: isDarkMode ? '#ffffff' : '#1976d2',
+                    color: isDarkMode ? '#000000' : '#ffffff',
+                    '&:hover': {
+                        backgroundColor: isDarkMode ? '#e0e0e0' : '#1565c0',
+                    }
+                }}
+            >
+                Save
+            </Button>
         </form>
     );
 };
