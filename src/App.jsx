@@ -1,7 +1,7 @@
 import { useState } from "react";
-import SnippetForm from "./components/SnippetForm";
+import { CATEGORIES, SnippetForm } from "./components/SnippetForm";
 import SnippetList from "./components/SnippetList";
-import { Button, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import {
@@ -21,8 +21,14 @@ import { github, githubGist } from "react-syntax-highlighter/dist/esm/styles/hlj
 function App() {
   const [snippets, setSnippets] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [theme, setTheme] = useState(atomDark);
+
+  // filter snippets based on selected category
+  const filteredSnippets = selectedCategory === "All"
+    ? snippets
+    : snippets.filter((s) => s.category === selectedCategory);
 
   // simple functions to add snippets and languages and delete snippets to be included in the components 
   // add a snippet to the list
@@ -69,7 +75,7 @@ function App() {
   const currentThemeOptions = isDarkMode ? darkThemeOptions : lightThemeOptions;
 
   return (
-    <div className="App" style={{ 
+    <div className="App" style={{
       backgroundColor: isDarkMode ? '#282c34' : '#ffffff',
       minHeight: '100vh',
       color: isDarkMode ? '#ffffff' : '#000000'
@@ -78,17 +84,18 @@ function App() {
         <div style={{ width: "50%", margin: "auto", paddingTop: "20px" }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
             <h2>Code Snippet Manager</h2>
+            {/* toggle dark/light mode */}
             <IconButton onClick={toggleMode} color="inherit">
               {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
           </div>
           <p><em>Save your source code snippets in any programming language in one place</em></p>
-          <div style={{ marginBottom: "20px" }}>
+          <div style={{ marginTop: "40px", marginBottom: "20px" }}>
             <label htmlFor="themeSelect">Select Theme: &nbsp;</label>
-            <select 
+            <select
               value={Object.keys(currentThemeOptions).find(key => currentThemeOptions[key] === theme)}
               onChange={(e) => setTheme(currentThemeOptions[e.target.value])}
-              style={{ 
+              style={{
                 padding: "8px",
                 borderRadius: "4px",
                 backgroundColor: isDarkMode ? "#3b3b3b" : "#ffffff",
@@ -107,7 +114,37 @@ function App() {
           </div>
           <SnippetForm onSave={addSnippet} languages={languages} onAddLanguage={addLanguage} isDarkMode={isDarkMode} />
           <div style={{ marginTop: "40px" }}>
-            <SnippetList snippets={snippets} onDelete={deleteSnippet} theme={theme} isDarkMode={isDarkMode} />
+            <h2>Your Snippets</h2>
+            {
+              // show snippet list if there are snippets
+              // otherwise show a message to add a snippet
+              snippets.length > 0 ? (
+                <>
+                  <label htmlFor="categorySelect">Select Category: &nbsp;</label>
+                  <select
+                    onChange={(e) => setSelectedCategory(e.target.value)} value={selectedCategory}
+                    style={{
+                      padding: "8px",
+                      borderRadius: "4px",
+                      backgroundColor: isDarkMode ? "#3b3b3b" : "#ffffff",
+                      border: "1px solid #ccc",
+                      color: isDarkMode ? "#ffffff" : "#333",
+                      width: "200px",
+                      fontSize: "16px"
+                    }}>
+                    <option value="All">All</option>
+                    {CATEGORIES.map((cat, index) => (
+                      <option key={index} value={cat}>{cat}</option>
+                    ))}
+                  </select>
+                  <SnippetList snippets={filteredSnippets} onDelete={(index) =>
+                    setSnippets(snippets.filter((_, i) => i !== index))}
+                  />
+                </>
+              ) : (
+                <p>No snippets yet. Add one!</p>
+              )
+            }
           </div>
         </div>
       </div>

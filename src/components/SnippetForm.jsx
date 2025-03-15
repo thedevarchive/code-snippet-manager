@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { TextField, Button } from "@mui/material";
 
-const CATEGORIES = ["Frontend", "Backend", "Database", "Algorithms"];
+export const CATEGORIES = ["Frontend", "Backend", "Database", "Algorithms"];
 
 // Form for code snippet creation
-const SnippetForm = ({ onSave, languages, onAddLanguage, isDarkMode }) => {
+export const SnippetForm = ({ onSave, languages, onAddLanguage, isDarkMode }) => {
     const [title, setTitle] = useState("");
     const [language, setLanguage] = useState("");
     const [code, setCode] = useState("");
@@ -165,5 +165,3 @@ const SnippetForm = ({ onSave, languages, onAddLanguage, isDarkMode }) => {
         </form>
     );
 };
-
-export default SnippetForm;
