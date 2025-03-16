@@ -75,13 +75,12 @@ function App() {
   const currentThemeOptions = isDarkMode ? darkThemeOptions : lightThemeOptions;
 
   return (
-    <div className="App" style={{
+    <div className="App" style={{ 
       backgroundColor: isDarkMode ? '#282c34' : '#ffffff',
-      minHeight: '100vh',
       color: isDarkMode ? '#ffffff' : '#000000'
     }}>
       <div className="App-header">
-        <div style={{ width: "50%", margin: "auto", paddingTop: "20px" }}>
+        <div style={{ width: "50%", margin: "auto", paddingTop: "20px", paddingBottom: "20px" }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
             <h2>Code Snippet Manager</h2>
             {/* toggle dark/light mode */}
@@ -91,6 +90,7 @@ function App() {
           </div>
           <p><em>Save your source code snippets in any programming language in one place</em></p>
           <div style={{ marginTop: "40px", marginBottom: "20px" }}>
+            {/* theme selector */}
             <label htmlFor="themeSelect">Select Theme: &nbsp;</label>
             <select
               value={Object.keys(currentThemeOptions).find(key => currentThemeOptions[key] === theme)}
@@ -112,8 +112,9 @@ function App() {
               ))}
             </select>
           </div>
+          {/* form component for adding a snippet */}
           <SnippetForm onSave={addSnippet} languages={languages} onAddLanguage={addLanguage} isDarkMode={isDarkMode} />
-          <div style={{ marginTop: "40px" }}>
+          <div style={{ marginTop: "40px", marginBottom: "20px" }}>
             <h2>Your Snippets</h2>
             {
               // show snippet list if there are snippets
@@ -130,16 +131,26 @@ function App() {
                       border: "1px solid #ccc",
                       color: isDarkMode ? "#ffffff" : "#333",
                       width: "200px",
-                      fontSize: "16px"
+                      fontSize: "16px",
+                      marginBottom: "20px"
                     }}>
                     <option value="All">All</option>
                     {CATEGORIES.map((cat, index) => (
                       <option key={index} value={cat}>{cat}</option>
                     ))}
                   </select>
-                  <SnippetList snippets={filteredSnippets} onDelete={(index) =>
-                    setSnippets(snippets.filter((_, i) => i !== index))}
-                  />
+                  {
+                    filteredSnippets.length > 0 ? (
+                      <div style={{ marginTop: "40px", marginBottom: "20px" }}>
+                      <SnippetList snippets={filteredSnippets} onDelete={(index) =>
+                        setSnippets(snippets.filter((_, i) => i !== index))}
+                      />
+
+                      </div>
+                    ) : (
+                      <p>No snippets in this category yet. Add some more snippets to see them here!</p>
+                    )
+                  }
                 </>
               ) : (
                 <p>No snippets yet. Add one!</p>
