@@ -14,7 +14,7 @@ Key Principles
 Naming Conventions
 
 - Use lowercase with dashes for directories (e.g., components/auth-wizard).
-- Favor named exports for components.
+- Favour named exports for components.
 
 TypeScript Usage
 
@@ -36,4 +36,4 @@ Key Conventions
 Other Details 
 
 - Label elements must be placed before their corresponding input field
-- Styles of each element should be in App.css file
+- Styles of each element should be placed in App.css file
