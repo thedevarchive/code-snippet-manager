@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CATEGORIES, SnippetForm } from "./components/SnippetForm";
 import SnippetList from "./components/SnippetList";
 import { IconButton } from "@mui/material";
@@ -20,16 +20,53 @@ import { github, githubGist } from "react-syntax-highlighter/dist/esm/styles/hlj
 // https://chatgpt.com/share/67d3a2dc-7214-8000-b4e3-f67597b45c66
 function App() {
   // states for adding snippets and languages
-  const [snippets, setSnippets] = useState([]);
-  const [languages, setLanguages] = useState([]);
+  // load snippets and languages from localStorage (if user has any)
+  const [snippets, setSnippets] = useState(() => {
+    const storedSnippets = localStorage.getItem("snippets");
+    return storedSnippets ? JSON.parse(storedSnippets) : [];
+  });
+  const [languages, setLanguages] = useState(() => {
+    const storedLanguages = localStorage.getItem("languages");
+    return storedLanguages ? JSON.parse(storedLanguages) : [];
+  });
 
   // states for filtering snippets
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedLanguage, setSelectedLanguage] = useState("All");
 
   // states for setting theme of web app
-  const [isDarkMode, setIsDarkMode] = useState(true);
-  const [theme, setTheme] = useState(atomDark);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const stored = localStorage.getItem("isDarkMode");
+    return stored ? JSON.parse(stored) : true;
+  });
+
+  // Theme options for syntax highlighting
+  const darkThemeOptions = {
+    'Atom Dark': atomDark,
+    'GitHub Dark': githubGist,
+    'One Dark': oneDark,
+    'Solarized Dark': solarizedDarkAtom,
+    'VS Code Dark': vscDarkPlus
+  };
+
+  const lightThemeOptions = {
+    'One Light': oneLight,
+    'GitHub': github,
+    'Solarized Light': solarizedlight,
+    'Tomorrow': tomorrow,
+    'Visual Studio': vs
+  };
+
+  // load theme previously set by user
+  const [theme, setTheme] = useState(() => {
+    const storedThemeName = localStorage.getItem("theme");
+    if (storedThemeName) {
+      const storedIsDarkMode = JSON.parse(localStorage.getItem("isDarkMode") ?? "true");
+      const themeOptions = storedIsDarkMode ? darkThemeOptions : lightThemeOptions;
+      return themeOptions[storedThemeName];
+    }
+    return atomDark;
+  });
 
   // filter snippets based on selected category
   const filteredSnippets = snippets.filter((s) => {
@@ -41,6 +78,7 @@ function App() {
   // simple functions to add snippets and languages and delete snippets to be included in the components 
   // add a snippet to the list
   const addSnippet = (snippet) => {
+    console.log('Adding snippet:', snippet);
     setSnippets([...snippets, snippet]);
   };
 
@@ -54,23 +92,6 @@ function App() {
     setLanguages([...languages, newLang]);
   };
 
-  // Theme options for syntax highlighting
-  const darkThemeOptions = {
-    'Atom Dark': atomDark,
-    'GitHub Dark': githubGist,
-    'One Dark': oneDark,
-    'Solarized Dark': solarizedDarkAtom,
-    'VS Code Dark': vscDarkPlus
-  };
-
-  const lightThemeOptions = {
-    'GitHub': github,
-    'One Light': oneLight,
-    'Solarized Light': solarizedlight,
-    'Tomorrow': tomorrow,
-    'Visual Studio': vs
-  };
-
   // Toggle dark/light mode
   const toggleMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -81,6 +102,15 @@ function App() {
 
   // Get current theme options based on mode
   const currentThemeOptions = isDarkMode ? darkThemeOptions : lightThemeOptions;
+
+  // Save all state changes to localStorage
+  useEffect(() => {
+    localStorage.setItem("snippets", JSON.stringify(snippets));
+    localStorage.setItem("languages", JSON.stringify(languages));
+    localStorage.setItem("isDarkMode", JSON.stringify(isDarkMode));
+    const themeName = Object.keys(currentThemeOptions).find(key => currentThemeOptions[key] === theme);
+    localStorage.setItem("theme", themeName);
+  }, [snippets, languages, isDarkMode, theme, currentThemeOptions]);
 
   return (
     <div className="App" style={{

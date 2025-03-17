@@ -16,7 +16,17 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode }) => {
         >
           <CardContent>
             <Typography variant="h6">{snippet.title} ({snippet.language}) - <strong>{snippet.category}</strong></Typography>
-            <SyntaxHighlighter language={snippet.language.toLowerCase() || "javascript"} style={theme}>
+            <SyntaxHighlighter 
+              language={snippet.language.toLowerCase() || "javascript"} 
+              style={theme}
+              showLineNumbers={false}
+              wrapLines={true}
+              customStyle={{
+                margin: '20px 0',
+                padding: '15px',
+                borderRadius: '4px'
+              }}
+            >
               {snippet.code}
             </SyntaxHighlighter>
             <Button 
