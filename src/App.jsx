@@ -113,9 +113,14 @@ function App() {
   }, [snippets, languages, isDarkMode, theme, currentThemeOptions]);
 
   return (
-    <div className="App" style={{
+    <div className="App" style={{ 
       backgroundColor: isDarkMode ? '#282c34' : '#ffffff',
-      color: isDarkMode ? '#ffffff' : '#000000'
+      color: isDarkMode ? '#ffffff' : '#000000',
+      minHeight: '100vh',
+      position: 'absolute',
+      width: '100%',
+      top: 0,
+      left: 0
     }}>
       <div className="App-header">
         <div style={{ width: "50%", margin: "auto", paddingTop: "20px", paddingBottom: "20px" }}>

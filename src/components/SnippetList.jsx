@@ -4,7 +4,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 // Shows list of all code snippets and their details
 const SnippetList = ({ snippets, onDelete, theme, isDarkMode }) => {
   return (
-    <div style={{ paddingBottom: "40px" }}>
+    <div>
       {snippets.map((snippet, index) => (
         <Card 
           key={index} 
