@@ -37,3 +37,4 @@ Other Details
 
 - Label elements must be placed before their corresponding input field
 - Styles of each element should be placed in App.css file
+- Indentation for each line should be two spaces ("  ")

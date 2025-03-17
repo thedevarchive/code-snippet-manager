@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -131,38 +131,44 @@ function App() {
                 {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
               </IconButton>
             </div>
-            <p><em>Save your source code snippets in any programming language in one place</em></p>
+            <p style={{ marginBottom: "40px" }}><em>Save your source code snippets in any programming language in one place.</em></p>
             
-            {/* Navigation */}
+            {/* Navigate between Add Snippet and Your Snippets */}
             <nav style={{ 
               marginTop: "20px", 
-              marginBottom: "20px", 
+              marginBottom: "40px", 
               display: "flex", 
-              gap: "20px",
+              gap: "100px",
               justifyContent: "center"
             }}>
-              <Link 
+              <NavLink 
                 to="/" 
-                style={{ 
+                style={({ isActive }) => ({ 
                   color: isDarkMode ? '#ffffff' : '#000000',
                   textDecoration: 'none',
                   fontSize: '1.1rem',
-                  fontWeight: 'bold'
-                }}
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  borderBottom: isActive ? `2px solid ${isDarkMode ? '#ffffff' : '#000000'}` : '2px solid transparent',
+                  paddingBottom: '3px',
+                  transition: 'border-color 0.3s ease-in-out'
+                })}
               >
-                Add Snippet
-              </Link>
-              <Link 
+                ADD SNIPPET
+              </NavLink>
+              <NavLink 
                 to="/view" 
-                style={{ 
+                style={({ isActive }) => ({ 
                   color: isDarkMode ? '#ffffff' : '#000000',
                   textDecoration: 'none',
                   fontSize: '1.1rem',
-                  fontWeight: 'bold'
-                }}
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  borderBottom: isActive ? `2px solid ${isDarkMode ? '#ffffff' : '#000000'}` : '2px solid transparent',
+                  paddingBottom: '3px',
+                  transition: 'border-color 0.3s ease-in-out'
+                })}
               >
-                View Snippets
-              </Link>
+                YOUR SNIPPETS
+              </NavLink>
             </nav>
 
             <Routes>
@@ -175,8 +181,6 @@ function App() {
                     onAddLanguage={addLanguage}
                     isDarkMode={isDarkMode}
                     theme={theme}
-                    currentThemeOptions={currentThemeOptions}
-                    setTheme={setTheme}
                   />
                 } 
               />
@@ -194,6 +198,8 @@ function App() {
                     selectedLanguage={selectedLanguage}
                     setSelectedLanguage={setSelectedLanguage}
                     filteredSnippets={filteredSnippets}
+                    currentThemeOptions={currentThemeOptions}
+                    setTheme={setTheme}
                   />
                 } 
               />
