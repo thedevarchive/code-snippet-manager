@@ -82,6 +82,13 @@ function App() {
     setSnippets([...snippets, snippet]);
   };
 
+  // update a snippet in the list
+  const handleUpdateSnippet = (index, updatedSnippet) => {
+    const newSnippets = [...snippets];
+    newSnippets[index] = updatedSnippet;
+    setSnippets(newSnippets);
+  };
+
   // delete a snippet from the list
   const deleteSnippet = (index) => {
     setSnippets(snippets.filter((_, i) => i !== index));
@@ -192,6 +199,7 @@ function App() {
                     snippets={snippets}
                     languages={languages}
                     onDelete={deleteSnippet}
+                    onUpdate={handleUpdateSnippet}
                     isDarkMode={isDarkMode}
                     theme={theme}
                     selectedCategory={selectedCategory}

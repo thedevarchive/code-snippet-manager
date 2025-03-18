@@ -6,6 +6,7 @@ export const ViewSnippets = ({
     snippets,
     languages,
     onDelete,
+    onUpdate,
     isDarkMode,
     theme,
     selectedCategory,
@@ -91,6 +92,8 @@ export const ViewSnippets = ({
                                 onDelete={onDelete}
                                 theme={theme}
                                 isDarkMode={isDarkMode}
+                                languages={languages}
+                                onUpdate={onUpdate}
                             />
                         </div>
                     ) : (
