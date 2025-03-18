@@ -16,6 +16,7 @@ import {
 import { github, githubGist } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { SnippetForm } from "./components/SnippetForm";
 import { ViewSnippets } from "./pages/ViewSnippets";
+import ManageLanguages from "./pages/ManageLanguages";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -44,6 +45,15 @@ function App() {
     const stored = localStorage.getItem("isDarkMode");
     return stored ? JSON.parse(stored) : true;
   });
+  
+  const [lightTheme, setLightTheme] = useState(() => {
+    const stored = localStorage.getItem("lightTheme");
+    return stored ? stored : "One Light";
+  });
+  const [darkTheme, setDarkTheme] = useState(() => {
+    const stored = localStorage.getItem("darkTheme");
+    return stored ? stored : "Atom Dark";
+  });
 
   // Theme options for syntax highlighting
   const darkThemeOptions = {
@@ -64,13 +74,9 @@ function App() {
 
   // load theme previously set by user
   const [theme, setTheme] = useState(() => {
-    const storedThemeName = localStorage.getItem("theme");
-    if (storedThemeName) {
-      const storedIsDarkMode = JSON.parse(localStorage.getItem("isDarkMode") ?? "true");
-      const themeOptions = storedIsDarkMode ? darkThemeOptions : lightThemeOptions;
-      return themeOptions[storedThemeName];
-    }
-    return atomDark;
+    const themeOptions = isDarkMode ? darkThemeOptions : lightThemeOptions;
+    const themeName = isDarkMode ? darkTheme : lightTheme;
+    return themeOptions[themeName] || atomDark;
   });
 
   // filter snippets based on selected category
@@ -107,9 +113,10 @@ function App() {
   // Toggle dark/light mode
   const toggleMode = () => {
     setIsDarkMode(!isDarkMode);
-    // Update theme to first available theme in new mode
-    const newModeThemes = isDarkMode ? lightThemeOptions : darkThemeOptions;
-    setTheme(Object.values(newModeThemes)[0]);
+    // Update theme based on current theme name in the new mode
+    const themeOptions = !isDarkMode ? darkThemeOptions : lightThemeOptions;
+    const currentThemeName = isDarkMode ? lightTheme : darkTheme;
+    setTheme(themeOptions[currentThemeName] || Object.values(themeOptions)[0]);
   };
 
   // Get current theme options based on mode
@@ -123,6 +130,31 @@ function App() {
     const themeName = Object.keys(currentThemeOptions).find(key => currentThemeOptions[key] === theme);
     localStorage.setItem("theme", themeName);
   }, [snippets, languages, isDarkMode, theme, currentThemeOptions]);
+
+  // Load theme preferences from localStorage on initial render
+  useEffect(() => {
+    const savedLightTheme = localStorage.getItem('lightTheme');
+    const savedDarkTheme = localStorage.getItem('darkTheme');
+    const savedIsDarkMode = localStorage.getItem('isDarkMode') === 'true';
+
+    if (savedLightTheme) setLightTheme(savedLightTheme);
+    if (savedDarkTheme) setDarkTheme(savedDarkTheme);
+    if (savedIsDarkMode !== null) setIsDarkMode(savedIsDarkMode);
+  }, []);
+
+  // Save theme preferences to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('lightTheme', lightTheme);
+    localStorage.setItem('darkTheme', darkTheme);
+    localStorage.setItem('isDarkMode', isDarkMode);
+  }, [lightTheme, darkTheme, isDarkMode]);
+
+  // Update theme when light/dark theme changes
+  useEffect(() => {
+    const themeOptions = isDarkMode ? darkThemeOptions : lightThemeOptions;
+    const themeName = isDarkMode ? darkTheme : lightTheme;
+    setTheme(themeOptions[themeName] || atomDark);
+  }, [isDarkMode, lightTheme, darkTheme]);
 
   const muiTheme = createTheme({
     typography: {
@@ -148,6 +180,40 @@ function App() {
       },
     },
   });
+
+  const handleUpdateLanguage = (oldLanguage, newLanguage) => {
+    // Update language in snippets
+    const updatedSnippets = snippets.map(snippet => 
+      snippet.language === oldLanguage 
+        ? { ...snippet, language: newLanguage }
+        : snippet
+    );
+    setSnippets(updatedSnippets);
+
+    // Update language in languages list
+    const updatedLanguages = languages.map(lang => 
+      lang === oldLanguage ? newLanguage : lang
+    );
+    setLanguages(updatedLanguages);
+
+    // Save to localStorage
+    localStorage.setItem("snippets", JSON.stringify(updatedSnippets));
+    localStorage.setItem("languages", JSON.stringify(updatedLanguages));
+  };
+
+  const handleDeleteLanguage = (languageToDelete) => {
+    // Delete snippets with the language
+    const updatedSnippets = snippets.filter(snippet => snippet.language !== languageToDelete);
+    setSnippets(updatedSnippets);
+
+    // Remove language from languages list
+    const updatedLanguages = languages.filter(lang => lang !== languageToDelete);
+    setLanguages(updatedLanguages);
+
+    // Save to localStorage
+    localStorage.setItem("snippets", JSON.stringify(updatedSnippets));
+    localStorage.setItem("languages", JSON.stringify(updatedLanguages));
+  };
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -187,8 +253,15 @@ function App() {
               <FormControl size="small" sx={{ minWidth: 120, mr: 2, mt: 0.75 }}>
                 <InputLabel sx={{ color: isDarkMode ? '#a0aec0' : '#4a5568' }}>Theme</InputLabel>
                 <Select
-                  value={theme}
-                  onChange={(e) => setTheme(e.target.value)}
+                  value={isDarkMode ? darkTheme : lightTheme}
+                  onChange={(e) => {
+                    const newThemeName = e.target.value;
+                    if (isDarkMode) {
+                      setDarkTheme(newThemeName);
+                    } else {
+                      setLightTheme(newThemeName);
+                    }
+                  }}
                   label="Theme"
                   sx={{
                     color: isDarkMode ? '#e2e8f0' : '#2d3748',
@@ -200,9 +273,9 @@ function App() {
                     },
                   }}
                 >
-                  {Object.entries(isDarkMode ? darkThemeOptions : lightThemeOptions).map(([key, value]) => (
-                    <MenuItem key={key} value={value}>
-                      {key}
+                  {Object.keys(isDarkMode ? darkThemeOptions : lightThemeOptions).map((themeName) => (
+                    <MenuItem key={themeName} value={themeName}>
+                      {themeName}
                     </MenuItem>
                   ))}
                 </Select>
@@ -226,6 +299,9 @@ function App() {
               </Button>
               <Button color="inherit" component={NavLink} to="/add" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
                 Add Snippet
+              </Button>
+              <Button color="inherit" component={NavLink} to="/languages" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+                Manage Languages
               </Button>
             </Toolbar>
           </AppBar>
@@ -259,11 +335,22 @@ function App() {
                       <SnippetForm
                         onSave={addSnippet}
                         languages={languages}
-                        onAddLanguage={addLanguage}
                         isDarkMode={isDarkMode}
                         theme={theme}
                       />
                     </>
+                  }
+                />
+                <Route
+                  path="/languages"
+                  element={
+                    <ManageLanguages
+                      languages={languages}
+                      onUpdateLanguage={handleUpdateLanguage}
+                      onDeleteLanguage={handleDeleteLanguage}
+                      onAddLanguage={addLanguage}
+                      isDarkMode={isDarkMode}
+                    />
                   }
                 />
               </Routes>

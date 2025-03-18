@@ -4,7 +4,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { CATEGORIES, handleKeyDown } from "../utils/snippetUtils";
 
 // Form for code snippet creation
-export const SnippetForm = ({ onSave, languages, onAddLanguage, isDarkMode, theme }) => {
+export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
     const [title, setTitle] = useState("");
     const [language, setLanguage] = useState("");
     const [code, setCode] = useState("");
@@ -46,54 +46,45 @@ export const SnippetForm = ({ onSave, languages, onAddLanguage, isDarkMode, them
                     }
                 }}
             />
-            <TextField
-                label="Language"
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-                placeholder="Enter a programming language (e.g. JavaScript, Python, Java, etc.)"
-                required
-                sx={{
-                    '& .MuiInputLabel-root': {
+            <FormControl>
+                <InputLabel sx={{ color: isDarkMode ? '#ffffff' : '#000000' }}>Language</InputLabel>
+                <Select
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                    label="Language"
+                    required
+                    sx={{
                         color: isDarkMode ? '#ffffff' : '#000000',
-                    },
-                    '& .MuiOutlinedInput-root': {
-                        color: isDarkMode ? '#ffffff' : '#000000',
-                        '& fieldset': {
+                        '& .MuiOutlinedInput-notchedOutline': {
                             borderColor: isDarkMode ? '#ffffff' : '#000000',
                         },
-                        '&:hover fieldset': {
+                        '&:hover .MuiOutlinedInput-notchedOutline': {
                             borderColor: isDarkMode ? '#ffffff' : '#000000',
                         },
-                    }
-                }}
-            />
-            <div style={{ position: "relative" }}>
-                <label
-                    style={{
-                        position: "absolute",
-                        top: "-8px",
-                        left: "14px",
-                        backgroundColor: isDarkMode ? "#282c34" : "#ffffff",
-                        padding: "0 4px",
-                        color: isDarkMode ? "#ffffff" : "#000000",
-                        fontSize: "0.75rem",
-                        zIndex: 1
                     }}
                 >
-                    Category
-                </label>
-                <select 
+                    {languages.map((lang) => (
+                        <MenuItem key={lang} value={lang}>
+                            {lang}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+            <FormControl>
+                <InputLabel sx={{ color: isDarkMode ? '#ffffff' : '#000000' }}>Category</InputLabel>
+                <Select 
                     value={category} 
                     onChange={(e) => setCategory(e.target.value)}
-                    style={{ 
-                        padding: "16.5px 14px",
-                        borderRadius: "4px",
-                        backgroundColor: "transparent",
-                        border: isDarkMode ? "1px solid #ffffff" : "1px solid #000000",
-                        color: isDarkMode ? "#ffffff" : "#333",
-                        width: "100%",
-                        fontSize: "1rem",
-                        outline: "none"
+                    label="Category"
+                    required
+                    sx={{
+                        color: isDarkMode ? '#ffffff' : '#000000',
+                        '& .MuiOutlinedInput-notchedOutline': {
+                            borderColor: isDarkMode ? '#ffffff' : '#000000',
+                        },
+                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                            borderColor: isDarkMode ? '#ffffff' : '#000000',
+                        },
                     }}
                 >
                     {CATEGORIES.map((cat, index) => (
@@ -101,8 +92,8 @@ export const SnippetForm = ({ onSave, languages, onAddLanguage, isDarkMode, them
                             {cat}
                         </option>
                     ))}
-                </select>
-            </div>
+                </Select>
+            </FormControl>
             <textarea
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
