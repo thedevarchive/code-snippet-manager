@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { useState } from "react";
-import { CATEGORIES } from "./SnippetForm";
+import { CATEGORIES } from "../utils/snippetUtils";
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import Tooltip from '@mui/material/Tooltip';
+import { handleKeyDown } from "../utils/snippetUtils";
 
 // Shows list of all code snippets and their details
 const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, languages }) => {
@@ -160,6 +161,9 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
                 <textarea
                   value={editedSnippet.code}
                   onChange={(e) => handleInputChange('code', e.target.value)}
+                  onKeyDown={(e) => {
+                    handleKeyDown(e, editedSnippet.code, (newCode) => handleInputChange('code', newCode));
+                  }}
                   style={{
                     width: '100%',
                     minHeight: '200px',

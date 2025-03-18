@@ -1,4 +1,4 @@
-import { CATEGORIES } from "../components/SnippetForm";
+import { CATEGORIES } from "../utils/snippetUtils";
 import SnippetList from "../components/SnippetList";
 import CodeIcon from '@mui/icons-material/Code';
 

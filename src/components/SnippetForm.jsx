@@ -1,44 +1,25 @@
 import { useState } from "react";
-import { TextField, Button } from "@mui/material";
-
-export const CATEGORIES = ["Frontend", "Backend", "Database", "Algorithms"];
+import { TextField, Button, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { CATEGORIES, handleKeyDown } from "../utils/snippetUtils";
 
 // Form for code snippet creation
-export const SnippetForm = ({ onSave, languages, onAddLanguage, isDarkMode }) => {
+export const SnippetForm = ({ onSave, languages, onAddLanguage, isDarkMode, theme }) => {
     const [title, setTitle] = useState("");
     const [language, setLanguage] = useState("");
     const [code, setCode] = useState("");
     const [category, setCategory] = useState(CATEGORIES[0]);
 
-    // Handle tab key in code input
-    const handleKeyDown = (e) => {
-        if (e.key === 'Tab') {
-            e.preventDefault();
-            const start = e.target.selectionStart;
-            const end = e.target.selectionEnd;
-
-            // Insert 4 spaces for tab
-            const spaces = '    ';
-            const newValue = code.substring(0, start) + spaces + code.substring(end);
-            setCode(newValue);
-
-            // Move cursor after the inserted spaces
-            setTimeout(() => {
-                e.target.selectionStart = e.target.selectionEnd = start + spaces.length;
-            }, 0);
-        }
-    };
-
     // save snippet
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!languages.includes(language) && language.trim() !== "") {
-            onAddLanguage(language); // Add new language if not already in the list
+        if (title && language && category && code) {
+            onSave({ title, language, category, code });
+            setTitle("");
+            setLanguage("");
+            setCategory("");
+            setCode("");
         }
-        onSave({ title, language, code, category });
-        setTitle("");
-        setLanguage("");
-        setCode("");
     };
 
     return (
@@ -122,31 +103,27 @@ export const SnippetForm = ({ onSave, languages, onAddLanguage, isDarkMode }) =>
                     ))}
                 </select>
             </div>
-            <TextField
-                label="Code Snippet"
-                multiline
-                minRows={8}
-                maxRows={20}
+            <textarea
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Enter code here"
-                required
-                sx={{
-                    '& .MuiInputLabel-root': {
-                        color: isDarkMode ? '#ffffff' : '#000000',
-                    },
-                    '& .MuiOutlinedInput-root': {
-                        color: isDarkMode ? '#ffffff' : '#000000',
-                        '& fieldset': {
-                            borderColor: isDarkMode ? '#ffffff' : '#000000',
-                        },
-                        '&:hover fieldset': {
-                            borderColor: isDarkMode ? '#ffffff' : '#000000',
-                        },
-                        fontFamily: 'monospace',
-                        fontSize: '14px',
-                    }
+                onKeyDown={(e) => {handleKeyDown(e, code, setCode)}}
+                style={{
+                    width: '100%',
+                    minHeight: '200px',
+                    margin: '20px 0',
+                    padding: '15px',
+                    borderRadius: '4px',
+                    backgroundColor: isDarkMode ? '#1a1a1a' : '#f8fafc',
+                    color: isDarkMode ? '#e2e8f0' : '#2d3748',
+                    border: isDarkMode ? '1px solid #4a5568' : '1px solid #cbd5e0',
+                    fontFamily: 'monospace',
+                    fontSize: '14px',
+                    resize: 'vertical',
+                    boxSizing: 'border-box',
+                    lineHeight: '1.5',
+                    whiteSpace: 'pre',
+                    overflow: 'auto',
+                    display: 'block'
                 }}
             />
             <Button
