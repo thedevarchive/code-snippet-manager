@@ -1,17 +1,18 @@
 import { Card, CardContent, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { useState } from "react";
+import { CATEGORIES } from "./SnippetForm";
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CATEGORIES } from "./SnippetForm";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import Tooltip from '@mui/material/Tooltip';
 
 // Shows list of all code snippets and their details
 const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, languages }) => {
+  //states for editing a snippet and managing changes in snippet
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedSnippet, setEditedSnippet] = useState({
     title: "",
@@ -19,6 +20,8 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
     category: "",
     code: ""
   });
+
+  //state for managing snippet to be copied to clipboard
   const [copiedIndex, setCopiedIndex] = useState(null);
 
   const handleEdit = (index, snippet) => {
@@ -31,6 +34,7 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
     });
   };
 
+  // function to copy code to clipboard
   const handleCopy = async (code, index) => {
     try {
       await navigator.clipboard.writeText(code);
@@ -41,6 +45,7 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
     }
   };
 
+  // save any edits to a snippet
   const handleSave = (index) => {
     // Find the original index in the full snippets array
     const originalIndex = snippets.findIndex(s =>
@@ -52,10 +57,12 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
     setEditingIndex(null);
   };
 
+  // cancel editing a snippet
   const handleCancel = () => {
     setEditingIndex(null);
   };
 
+  // handle input changes in the editing form
   const handleInputChange = (field, value) => {
     setEditedSnippet(prev => ({
       ...prev,
@@ -63,6 +70,7 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
     }));
   };
 
+  // render the list of snippets
   return (
     <div>
       {snippets.map((snippet, index) => (
@@ -272,10 +280,10 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
               </>
             )}
           </CardContent>
-        </Card >
+        </Card>
       ))
       }
-    </div >
+    </div>
   );
 };
 
