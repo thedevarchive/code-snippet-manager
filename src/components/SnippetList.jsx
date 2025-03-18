@@ -78,8 +78,11 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
           key={index}
           style={{
             marginBottom: "10px",
-            backgroundColor: isDarkMode ? '#3b3b3b' : '#ffffff',
-            color: isDarkMode ? '#ffffff' : '#000000'
+            backgroundColor: isDarkMode ? '#2d2d2d' : '#ffffff',
+            color: isDarkMode ? '#e2e8f0' : '#2c3e50',
+            boxShadow: isDarkMode 
+              ? '0 2px 4px rgba(0, 0, 0, 0.2)' 
+              : '0 2px 4px rgba(0, 0, 0, 0.4)'
           }}
         >
           <CardContent>
@@ -94,32 +97,32 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
                     fullWidth
                     sx={{
                       '& .MuiOutlinedInput-root': {
-                        color: isDarkMode ? '#ffffff' : '#000000',
+                        color: isDarkMode ? '#e2e8f0' : '#2d3748',
                         '& fieldset': {
-                          borderColor: isDarkMode ? '#ffffff' : '#000000',
+                          borderColor: isDarkMode ? '#4a5568' : '#cbd5e0',
                         },
                         '&:hover fieldset': {
-                          borderColor: isDarkMode ? '#ffffff' : '#000000',
+                          borderColor: isDarkMode ? '#718096' : '#a0aec0',
                         },
                       },
                       '& .MuiInputLabel-root': {
-                        color: isDarkMode ? '#ffffff' : '#000000',
+                        color: isDarkMode ? '#a0aec0' : '#4a5568',
                       },
                     }}
                   />
                   <FormControl fullWidth>
-                    <InputLabel sx={{ color: isDarkMode ? '#ffffff' : '#000000' }}>Language</InputLabel>
+                    <InputLabel sx={{ color: isDarkMode ? '#a0aec0' : '#4a5568' }}>Language</InputLabel>
                     <Select
                       value={editedSnippet.language}
                       onChange={(e) => handleInputChange('language', e.target.value)}
                       label="Language"
                       sx={{
-                        color: isDarkMode ? '#ffffff' : '#000000',
+                        color: isDarkMode ? '#e2e8f0' : '#2d3748',
                         '& .MuiOutlinedInput-notchedOutline': {
-                          borderColor: isDarkMode ? '#ffffff' : '#000000',
+                          borderColor: isDarkMode ? '#4a5568' : '#cbd5e0',
                         },
                         '&:hover .MuiOutlinedInput-notchedOutline': {
-                          borderColor: isDarkMode ? '#ffffff' : '#000000',
+                          borderColor: isDarkMode ? '#718096' : '#a0aec0',
                         },
                       }}
                     >
@@ -131,18 +134,18 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
                     </Select>
                   </FormControl>
                   <FormControl fullWidth>
-                    <InputLabel sx={{ color: isDarkMode ? '#ffffff' : '#000000' }}>Category</InputLabel>
+                    <InputLabel sx={{ color: isDarkMode ? '#a0aec0' : '#4a5568' }}>Category</InputLabel>
                     <Select
                       value={editedSnippet.category}
                       onChange={(e) => handleInputChange('category', e.target.value)}
                       label="Category"
                       sx={{
-                        color: isDarkMode ? '#ffffff' : '#000000',
+                        color: isDarkMode ? '#e2e8f0' : '#2d3748',
                         '& .MuiOutlinedInput-notchedOutline': {
-                          borderColor: isDarkMode ? '#ffffff' : '#000000',
+                          borderColor: isDarkMode ? '#4a5568' : '#cbd5e0',
                         },
                         '&:hover .MuiOutlinedInput-notchedOutline': {
-                          borderColor: isDarkMode ? '#ffffff' : '#000000',
+                          borderColor: isDarkMode ? '#718096' : '#a0aec0',
                         },
                       }}
                     >
@@ -163,9 +166,9 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
                     margin: '20px 0',
                     padding: '15px',
                     borderRadius: '4px',
-                    backgroundColor: isDarkMode ? '#2d2d2d' : '#ffffff',
-                    color: isDarkMode ? '#ffffff' : '#000000',
-                    border: isDarkMode ? '1px solid #ffffff' : '1px solid #000000',
+                    backgroundColor: isDarkMode ? '#1a1a1a' : '#f8fafc',
+                    color: isDarkMode ? '#e2e8f0' : '#2d3748',
+                    border: isDarkMode ? '1px solid #4a5568' : '1px solid #cbd5e0',
                     fontFamily: 'monospace',
                     fontSize: '14px',
                     resize: 'vertical',

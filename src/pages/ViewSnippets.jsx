@@ -13,37 +13,13 @@ export const ViewSnippets = ({
     setSelectedCategory,
     selectedLanguage,
     setSelectedLanguage,
-    filteredSnippets,
-    currentThemeOptions,
-    setTheme
+    filteredSnippets
 }) => {
     return (
         <div>
+            <h2>Your Snippets</h2>
             {snippets.length > 0 ? (
                 <>
-                    <div style={{ marginBottom: "20px" }}>
-                        {/* Theme selector */}
-                        <label htmlFor="themeSelect">Select Theme: &nbsp;</label>
-                        <select
-                            value={Object.keys(currentThemeOptions).find(key => currentThemeOptions[key] === theme)}
-                            onChange={(e) => setTheme(currentThemeOptions[e.target.value])}
-                            style={{
-                                padding: "8px",
-                                borderRadius: "4px",
-                                backgroundColor: isDarkMode ? "#3b3b3b" : "#ffffff",
-                                border: "1px solid #ccc",
-                                color: isDarkMode ? "#ffffff" : "#333",
-                                width: "200px",
-                                fontSize: "16px"
-                            }}
-                        >
-                            {Object.keys(currentThemeOptions).map((themeName) => (
-                                <option key={themeName} value={themeName}>
-                                    {themeName}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
                     {/* Filter for categories (e.g. Frontend, Backend, etc.) */}
                     <label htmlFor="categorySelect">Select Category: &nbsp;</label>
                     <select
