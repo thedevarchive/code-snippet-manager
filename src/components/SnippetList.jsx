@@ -6,6 +6,9 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CATEGORIES } from "./SnippetForm";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CheckIcon from '@mui/icons-material/Check';
+import Tooltip from '@mui/material/Tooltip';
 
 // Shows list of all code snippets and their details
 const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, languages }) => {
@@ -16,6 +19,7 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
     category: "",
     code: ""
   });
+  const [copiedIndex, setCopiedIndex] = useState(null);
 
   const handleEdit = (index, snippet) => {
     setEditingIndex(index);
@@ -25,6 +29,16 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
       category: snippet.category,
       code: snippet.code
     });
+  };
+
+  const handleCopy = async (code, index) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopiedIndex(index);
+      setTimeout(() => setCopiedIndex(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
   };
 
   const handleSave = (index) => {
@@ -205,44 +219,62 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
                   {snippet.code}
                 </SyntaxHighlighter>
                 <div style={{ display: 'flex', gap: '10px' }}>
-                <Button
-                  onClick={() => handleEdit(index, snippet)}
-                  variant="outlined"
-                  startIcon={<EditIcon />}
-                  sx={{
-                    borderColor: isDarkMode ? '#ffffff' : '#1976d2',
-                    color: isDarkMode ? '#ffffff' : '#1976d2',
-                    '&:hover': {
+                  <Button
+                    onClick={() => handleEdit(index, snippet)}
+                    variant="outlined"
+                    startIcon={<EditIcon />}
+                    sx={{
                       borderColor: isDarkMode ? '#ffffff' : '#1976d2',
-                      backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(25, 118, 210, 0.1)',
-                    }
-                  }}
-                >
-                  Edit
-                </Button>
-                <Button
-                  onClick={() => onDelete(index)}
-                  variant="outlined"
-                  color="error"
-                  startIcon={<DeleteIcon />}
-                  sx={{
-                    borderColor: isDarkMode ? '#ffffff' : '#d32f2f',
-                    color: isDarkMode ? '#ffffff' : '#d32f2f',
-                    '&:hover': {
+                      color: isDarkMode ? '#ffffff' : '#1976d2',
+                      '&:hover': {
+                        borderColor: isDarkMode ? '#ffffff' : '#1976d2',
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(25, 118, 210, 0.1)',
+                      }
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Tooltip title={copiedIndex === index ? "Copied!" : "Copy to clipboard"}>
+                    <Button
+                      onClick={() => handleCopy(snippet.code, index)}
+                      variant="outlined"
+                      size="small"
+                      startIcon={copiedIndex === index ? <CheckIcon /> : <ContentCopyIcon />}
+                      sx={{
+                        borderColor: isDarkMode ? '#ffffff' : '#1976d2',
+                        color: isDarkMode ? '#ffffff' : '#1976d2',
+                        '&:hover': {
+                          borderColor: isDarkMode ? '#ffffff' : '#1976d2',
+                          backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(25, 118, 210, 0.1)',
+                        }
+                      }}
+                    >
+                      {copiedIndex === index ? 'Copied!' : 'Copy'}
+                    </Button>
+                  </Tooltip>
+                  <Button
+                    onClick={() => onDelete(index)}
+                    variant="outlined"
+                    color="error"
+                    startIcon={<DeleteIcon />}
+                    sx={{
                       borderColor: isDarkMode ? '#ffffff' : '#d32f2f',
-                      backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(211, 47, 47, 0.1)',
-                    }
-                  }}
-                >
-                  Delete
-                </Button>
+                      color: isDarkMode ? '#ffffff' : '#d32f2f',
+                      '&:hover': {
+                        borderColor: isDarkMode ? '#ffffff' : '#d32f2f',
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(211, 47, 47, 0.1)',
+                      }
+                    }}
+                  >
+                    Delete
+                  </Button>
                 </div>
               </>
             )}
-        </CardContent>
+          </CardContent>
         </Card >
-  ))
-}
+      ))
+      }
     </div >
   );
 };
