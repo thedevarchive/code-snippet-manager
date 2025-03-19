@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { TextField, Button, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { CATEGORIES, handleKeyDown } from "../utils/snippetUtils";
 
 // Form for code snippet creation
