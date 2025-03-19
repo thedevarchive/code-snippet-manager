@@ -68,6 +68,8 @@ import {
 import { FaJava } from 'react-icons/fa';
 import { TbBrandCSharp } from 'react-icons/tb';
 
+// icons for the languages
+// list is not exhaustive, but should at least cover the most popular languages
 export const languageIcons = {
   javascript: SiJavascript,
   python: SiPython,

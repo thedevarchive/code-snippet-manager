@@ -22,6 +22,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
 import { languageIcons } from '../utils/languageIcons';
 
+// page for managing the programming languages
+// made for the languages dropdown selector in the add snippet page
 const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddLanguage, isDarkMode }) => {
   const [editingLanguage, setEditingLanguage] = useState(null);
   const [editedName, setEditedName] = useState('');
@@ -30,11 +32,13 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
   const [newLanguage, setNewLanguage] = useState('');
   const [isAdding, setIsAdding] = useState(false);
 
+  // handle editing a language
   const handleEdit = (language) => {
     setEditingLanguage(language);
     setEditedName(language);
   };
 
+  // handle saving the edited language
   const handleSave = () => {
     if (editedName.trim() && editedName !== editingLanguage) {
       onUpdateLanguage(editingLanguage, editedName.trim());
@@ -46,26 +50,31 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
     setEditingLanguage(null);
   };
 
+  // handle deleting a language
   const handleDeleteClick = (language) => {
     setLanguageToDelete(language);
     setDeleteDialogOpen(true);
   };
 
+  // handle confirming the deletion of a language
   const handleDeleteConfirm = () => {
     onDeleteLanguage(languageToDelete);
     setDeleteDialogOpen(false);
     setLanguageToDelete(null);
   };
 
+  // handle cancelling the deletion of a language
   const handleDeleteCancel = () => {
     setDeleteDialogOpen(false);
     setLanguageToDelete(null);
   };
 
+  // handle adding a language
   const handleAddClick = () => {
     setIsAdding(true);
   };
 
+  // handle saving the added language
   const handleAddSave = () => {
     if (newLanguage.trim()) {
       onAddLanguage(newLanguage.trim());
@@ -74,11 +83,13 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
     }
   };
 
+  // handle cancelling the addition of a language
   const handleAddCancel = () => {
     setNewLanguage('');
     setIsAdding(false);
   };
 
+  // get the icon for the corresponding language, if possible
   const getLanguageIcon = (language) => {
     const IconComponent = languageIcons[language.toLowerCase()];
     return IconComponent ? <IconComponent /> : null;
@@ -102,6 +113,7 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
         >
           Manage Languages
         </Typography>
+        {/* Add Language button, only show when not adding a language */}
         {!isAdding && (
           <Tooltip title="Add Language">
             <Fab
@@ -121,6 +133,7 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
         )}
       </Box>
 
+      {/* Show Add Language card only when user is clicks the add icon */}
       {isAdding && (
         <Card
           sx={{
@@ -156,7 +169,9 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
                 <IconButton 
                   onClick={handleAddSave}
                   sx={{ 
-                    color: isDarkMode ? '#4caf50' : '#2e7d32',
+                    color: (newLanguage.trim() === '') ? '#a0a0a0' : (isDarkMode ? '#4caf50' : '#2e7d32'),
+                    cursor: (newLanguage.trim() === '') ? 'not-allowed' : 'pointer',
+                    disabled: newLanguage.trim() === '',
                     '&:hover': {
                       backgroundColor: isDarkMode ? 'rgba(76, 175, 80, 0.1)' : 'rgba(46, 125, 50, 0.1)',
                     }
@@ -185,6 +200,7 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
 
       <Divider sx={{ mb: 3, backgroundColor: isDarkMode ? '#4a5568' : '#cbd5e0' }} />
 
+      {/* Show all languages in cards */}
       {languages.map((language) => (
         <Card
           key={language}
@@ -281,6 +297,8 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
         </Card>
       ))}
 
+      {/* Dialog for deleting a language
+          Deleting a language will also delete all snippets using that language */}
       <Dialog 
         open={deleteDialogOpen} 
         onClose={handleDeleteCancel}

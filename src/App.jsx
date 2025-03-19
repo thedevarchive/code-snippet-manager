@@ -19,7 +19,6 @@ import { ViewSnippets } from "./pages/ViewSnippets";
 import ManageLanguages from "./pages/ManageLanguages";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { AppBar, Toolbar, Typography, Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import CodeIcon from '@mui/icons-material/Code';
 
@@ -156,6 +155,7 @@ function App() {
     setTheme(themeOptions[themeName] || atomDark);
   }, [isDarkMode, lightTheme, darkTheme]);
 
+  // set font and colour scheme for MUI components
   const muiTheme = createTheme({
     typography: {
       fontFamily: [
@@ -228,6 +228,7 @@ function App() {
           top: 0,
           left: 0
         }}>
+        {/* AppBar component */}
           <AppBar position="static" sx={{ backgroundColor: isDarkMode ? '#2d2d2d' : '#ffffff', boxShadow: 'none' }}>
             <Toolbar>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', flexGrow: 1 }}>
@@ -250,6 +251,7 @@ function App() {
                   Save your source code snippets in any programming language in one place
                 </Typography>
               </div>
+              {/* Theme selector, show different themes based on dark/light mode */}
               <FormControl size="small" sx={{ minWidth: 120, mr: 2, mt: 0.75 }}>
                 <InputLabel sx={{ color: isDarkMode ? '#a0aec0' : '#4a5568' }}>Theme</InputLabel>
                 <Select
@@ -280,6 +282,7 @@ function App() {
                   ))}
                 </Select>
               </FormControl>
+              {/* Toggle dark/light mode */}
               <Tooltip title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}>
                 <IconButton
                   onClick={toggleMode}
@@ -306,6 +309,7 @@ function App() {
             </Toolbar>
           </AppBar>
           <div className="App-header">
+            {/* Routes for the different pages */}
             <div style={{ width: "50%", margin: "auto", paddingTop: "20px" }}>
               <Routes>
                 <Route
