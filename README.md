@@ -1,6 +1,6 @@
 # About this Project
 
-This is a web application that allows users to add and manage their code snippets. 
+This is a web application that allows developers to add and manage their code snippets. 
 
 # How to Run
 
