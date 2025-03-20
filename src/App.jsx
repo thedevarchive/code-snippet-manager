@@ -220,7 +220,7 @@ function App() {
       <CssBaseline />
       <Router>
         <div className="App" style={{
-          backgroundColor: isDarkMode ? '#282c34' : '#ffffff',
+          backgroundColor: isDarkMode ? '#282c34' : '#f7f7f7',
           color: isDarkMode ? '#ffffff' : '#000000',
           minHeight: '100vh',
           position: 'absolute',
@@ -229,7 +229,7 @@ function App() {
           left: 0
         }}>
           {/* AppBar component */}
-          <AppBar position="static" sx={{ backgroundColor: isDarkMode ? '#2d2d2d' : '#f7f7f7', boxShadow: 'none' }}>
+          <AppBar position="static" sx={{ backgroundColor: isDarkMode ? '#2d2d2d' : '#e0e0e0', boxShadow: 'none' }}>
             <Toolbar>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', flexGrow: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
