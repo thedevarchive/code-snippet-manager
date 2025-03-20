@@ -242,8 +242,8 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
                     boxSizing: 'border-box'
                   }}
                 >
-                  {snippet.code}
-                </SyntaxHighlighter>
+              {snippet.code}
+            </SyntaxHighlighter>
                 <div style={{ display: 'flex', gap: '10px' }}>
                   <Tooltip title="Edit snippet">
                     <Button

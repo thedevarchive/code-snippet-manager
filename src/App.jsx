@@ -229,7 +229,7 @@ function App() {
           left: 0
         }}>
           {/* AppBar component */}
-          <AppBar position="static" sx={{ backgroundColor: isDarkMode ? '#2d2d2d' : '#ffffff', boxShadow: 'none' }}>
+          <AppBar position="static" sx={{ backgroundColor: isDarkMode ? '#2d2d2d' : '#f7f7f7', boxShadow: 'none' }}>
             <Toolbar>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', flexGrow: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
