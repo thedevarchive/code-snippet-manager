@@ -10,6 +10,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import Tooltip from '@mui/material/Tooltip';
 import { handleKeyDown } from "../utils/snippetUtils";
+import { handleLanguage } from "../utils/languageUtils"; 
 
 // Shows list of all code snippets and their details
 const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, languages }) => {
@@ -45,54 +46,6 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
       console.error('Failed to copy text: ', err);
     }
   };
-
-  // function for handling the type of language to be read by syntax highlighter
-  const handleLanguage = (l) => {
-    if (l) {
-      switch (l) {
-        case "asp.net":
-          return "aspnet";
-        case "brainfck":
-        case "brainf*ck":
-        case "brainf**k":
-        case "brainfvck":
-        case "branflakes":
-        case "brainfrick":
-        case "brainfreak":
-        case "brainoof":
-        case "brainf":
-        case "bf":
-          return "brainfuck";
-        case "c#":
-          return "csharp";
-        case "c++":
-          return "cpp";
-        case "f#":
-          return "fsharp";
-        case "express": 
-        case "expressjs": 
-        case "express.js": 
-        case "knockout": 
-        case "knockoutjs":
-        case "knockout js": 
-        case "knockout.js": 
-        case "next": 
-        case "next.js": 
-        case "node": 
-        case "node.js": 
-        case "react":
-        case "react native": 
-          return "javascript";
-        case "objective c":
-          return "objectivec";
-        case "angular": 
-          return "typescript"; 
-        default:
-          return l;
-      }
-    }
-    else return "javascript";
-  }
 
   // save any edits to a snippet
   const handleSave = (index) => {
