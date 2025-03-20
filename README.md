@@ -27,7 +27,7 @@ You can also check out the demo [here](https://tda-code-snippets.netlify.app/).
 When starting the app for the first time, you are required to add a programming language before adding a code snippet. 
 
 ## Adding a Programming Language
-Click on Manage Languages in the application's bar and clicking on the plus sign. Then, type the name of the language and click on the green floppy disc icon to save it. 
+Click on Manage Languages in the application's bar and clicking on the plus sign. Then, type the name of the language and click on the floppy disc icon to save it. You may also click on the cross if you change your mind. 
 
 ## Managing Programming Languages
 You can edit or delete languages in the Manage Languages page. If you delete a language, __all snippets__ using that language will be deleted as well. A confirmation dialog box will appear asking you if you want to confirm deletion, and once you click on Delete, you cannot undo the action. 
@@ -37,6 +37,9 @@ Go to Add Snippet. Then, name the snippet in the Title field, select the languag
 
 ## Viewing and Managing Code Snippets 
 Click on View Snippets to see all the saved snippets. Use the filters to sort them by category, programming language or both. Click on the pencil icon to edit the snippet and its details, click on the copy button to copy the snippet to the clipboard and the bin icon to delete the snippet. Unlike with the languages, there will be __no dialog box__ asking you to confirm this decision, so make sure you are certain you want to delete a snippet. 
+
+## Editing Code Snippets
+Feel free to make changes to any of the details of the code snippets. Once you are done, click on the floppy disc icon to save it. If you change your mind, click on the cross icon. 
 
 # Features
 
