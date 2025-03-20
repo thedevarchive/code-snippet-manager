@@ -184,7 +184,7 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
                   }}
                 />
                 <div style={{ display: 'flex', gap: '10px' }}>
-                  <Tooltip title="Save edits">
+                  <Tooltip title="Save changes to snippet">
                     <Button
                       onClick={() => handleSave(index)}
                       variant="outlined"
@@ -203,7 +203,7 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
                       <SaveIcon />
                     </Button>
                   </Tooltip>
-                  <Tooltip title="Cancel edit">
+                  <Tooltip title="Discard changes to snippet">
                     <Button
                       onClick={() => handleCancel()}
                       variant="outlined"

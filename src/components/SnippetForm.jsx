@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { TextField, Button, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { CATEGORIES, handleKeyDown } from "../utils/snippetUtils";
+import Tooltip from '@mui/material/Tooltip';
 
 // Form for code snippet creation
 export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
+    //states for each field in SnippetForm
     const [title, setTitle] = useState("");
     const [language, setLanguage] = useState("");
     const [code, setCode] = useState("");
     const [category, setCategory] = useState(CATEGORIES[0]);
+
+    // state for showing the save tooltip when saving snippet is successful
+    const [tooltipOpen, setTooltipOpen] = useState(false);
 
     // save snippet
     const handleSubmit = (e) => {
@@ -19,6 +24,10 @@ export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
             setCategory("");
             setCode("");
         }
+
+        // Show tooltip
+        setTooltipOpen(true);
+        setTimeout(() => setTooltipOpen(false), 1500); // Close after 1.5s
     };
 
     return (
@@ -71,8 +80,8 @@ export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
             </FormControl>
             <FormControl>
                 <InputLabel sx={{ color: isDarkMode ? '#ffffff' : '#000000' }}>Category</InputLabel>
-                <Select 
-                    value={category} 
+                <Select
+                    value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     label="Category"
                     required
@@ -96,7 +105,7 @@ export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
             <textarea
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                onKeyDown={(e) => {handleKeyDown(e, code, setCode)}}
+                onKeyDown={(e) => { handleKeyDown(e, code, setCode) }}
                 style={{
                     width: '100%',
                     minHeight: '200px',
@@ -116,19 +125,21 @@ export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
                     display: 'block'
                 }}
             />
-            <Button
-                type="submit"
-                variant="contained"
-                sx={{
-                    backgroundColor: isDarkMode ? '#ffffff' : '#1976d2',
-                    color: isDarkMode ? '#000000' : '#ffffff',
-                    '&:hover': {
-                        backgroundColor: isDarkMode ? '#e0e0e0' : '#1565c0',
-                    }
-                }}
-            >
-                Save
-            </Button>
+            <Tooltip title={tooltipOpen ? "Snippet saved!" : "Save snippet"}>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                        backgroundColor: isDarkMode ? '#ffffff' : '#1976d2',
+                        color: isDarkMode ? '#000000' : '#ffffff',
+                        '&:hover': {
+                            backgroundColor: isDarkMode ? '#e0e0e0' : '#1565c0',
+                        }
+                    }}
+                >
+                    {tooltipOpen ? "Saved!" : "Save"}
+                </Button>
+            </Tooltip>
         </form>
     );
 };
