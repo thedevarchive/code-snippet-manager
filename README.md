@@ -51,4 +51,4 @@ Feel free to make changes to any of the details of the code snippets. Once you a
 
 # How to Report Issues
 
-Email me at amaengo@protonmail.com if you find any bugs in the program or have any issues running it. 
+Email me at amaengo@protonmail.com if you find any bugs in the program or have any issues running it. Any feedback and suggestions is also appreciated. 
