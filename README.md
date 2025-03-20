@@ -24,7 +24,7 @@ You can also check out the demo [here](https://tda-code-snippets.netlify.app/).
 
 # How to Use
 
-When starting the app for the first time, you are required to add a programming language before adding a code snippet. You must have at least one programming language added before adding snippets. 
+When starting the app for the first time, you are required to add a programming language before adding a code snippet. You must add at least one programming language before adding snippets. 
 
 ## Adding a Programming Language
 Click on Manage Languages in the application's bar and clicking on the plus sign. Then, type the name of the language and click on the floppy disc icon to save it. You may also click on the cross if you change your mind. 
