@@ -36,7 +36,7 @@ You can edit or delete languages in the Manage Languages page. If you delete a l
 Go to Add Snippet. Then, name the snippet in the Title field, select the language the snippet uses and then select the appropriate category for the snippet. Finally, enter the snippet in the text area below the aforementioned fields. Once done, click on the Save button. Afterwards, it should say "Saved!" if a new snippet has been added to the list. 
 
 ## Viewing and Managing Code Snippets 
-Click on View Snippets to see all the saved snippets. Use the filters to sort them by category, programming language or both. Click on the pencil icon to edit the snippet and its details, click on the copy button to copy the snippet to the clipboard and the bin icon to delete the snippet. Unlike with the languages, there will be __no dialog box__ asking you to confirm this decision, so make sure you are certain you want to delete a snippet. 
+Click on View Snippets to see all the saved snippets. Use the filters to sort them by category, programming language or both. Click on the pencil icon to edit the snippet and its details, click on the copy button to copy the snippet to the clipboard or click on the bin icon to delete the snippet. Unlike the languages, there will be __no dialog box__ asking you to confirm this decision, so make sure you are certain you want to delete a snippet. 
 
 ## Editing Code Snippets
 Feel free to make changes to any of the details of the code snippets. Once you are done, click on the floppy disc icon to save it. If you change your mind, click on the cross icon. 
