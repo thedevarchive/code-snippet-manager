@@ -87,9 +87,9 @@ export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
                     }}
                 >
                     {CATEGORIES.map((cat, index) => (
-                        <option key={index} value={cat}>
+                        <MenuItem key={index} value={cat}>
                             {cat}
-                        </option>
+                        </MenuItem>
                     ))}
                 </Select>
             </FormControl>
