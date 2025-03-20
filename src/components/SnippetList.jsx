@@ -81,6 +81,7 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
         case "node": 
         case "node.js": 
         case "react":
+        case "react native": 
           return "javascript";
         case "objective c":
           return "objectivec";
