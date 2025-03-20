@@ -49,33 +49,48 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
   // function for handling the type of language to be read by syntax highlighter
   const handleLanguage = (l) => {
     if (l) {
-      switch(l) {
-        case "asp.net": 
-          return "aspnet"; 
-        case "brainfck": 
-        case "brainf*ck": 
-        case "brainf**k": 
-        case "brainfvck": 
-        case "branflakes": 
-        case "brainfrick": 
-        case "brainfreak": 
-        case "brainoof": 
-        case "brainf": 
-        case "bf": 
-          return "brainfuck"; 
-        case "c#": 
-          return "csharp"; 
-        case "c++": 
-          return "cpp"; 
-        case "f#": 
-          return "fsharp"; 
-        case "objective c": 
-          return "objectivec"; 
-        default: 
-          return l; 
+      switch (l) {
+        case "asp.net":
+          return "aspnet";
+        case "brainfck":
+        case "brainf*ck":
+        case "brainf**k":
+        case "brainfvck":
+        case "branflakes":
+        case "brainfrick":
+        case "brainfreak":
+        case "brainoof":
+        case "brainf":
+        case "bf":
+          return "brainfuck";
+        case "c#":
+          return "csharp";
+        case "c++":
+          return "cpp";
+        case "f#":
+          return "fsharp";
+        case "express": 
+        case "expressjs": 
+        case "express.js": 
+        case "knockout": 
+        case "knockoutjs":
+        case "knockout js": 
+        case "knockout.js": 
+        case "next": 
+        case "next.js": 
+        case "node": 
+        case "node.js": 
+        case "react":
+          return "javascript";
+        case "objective c":
+          return "objectivec";
+        case "angular": 
+          return "typescript"; 
+        default:
+          return l;
       }
     }
-    else return "javascript"; 
+    else return "javascript";
   }
 
   // save any edits to a snippet
@@ -113,8 +128,8 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
             marginBottom: "10px",
             backgroundColor: isDarkMode ? '#2d2d2d' : '#ffffff',
             color: isDarkMode ? '#e2e8f0' : '#2c3e50',
-            boxShadow: isDarkMode 
-              ? '0 2px 4px rgba(0, 0, 0, 0.2)' 
+            boxShadow: isDarkMode
+              ? '0 2px 4px rgba(0, 0, 0, 0.2)'
               : '0 2px 4px rgba(0, 0, 0, 0.4)'
           }}
         >
