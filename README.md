@@ -30,7 +30,11 @@ When starting the app for the first time, you are required to add a programming 
 Click on Manage Languages in the application's bar and clicking on the plus sign. Then, type the name of the language and click on the floppy disc icon to save it. You may also click on the cross if you change your mind. 
 
 ## Managing Programming Languages
-You can edit or delete languages in the Manage Languages page. If you delete a language, __all snippets__ using that language will be deleted as well. A confirmation dialog box will appear asking you if you want to confirm deletion, and once you click on Delete, you cannot undo the action. 
+You can edit or delete languages in the Manage Languages page. 
+
+When editing, click on the floppy disc icon to save changes. Otherwise, click on the cross button to revert changes. 
+
+If you delete a language, __all snippets__ using that language will be deleted as well. A confirmation dialog box will appear asking you if you want to confirm deletion, and once you click on Delete, you cannot undo the action. 
 
 ## Adding a Code Snippet
 Go to Add Snippet. Then, name the snippet in the Title field, select the language the snippet uses and then select the appropriate category for the snippet. Finally, enter the snippet in the text area below the aforementioned fields. Once done, click on the Save button. Afterwards, it should say "Saved!" if a new snippet has been added to the list. 
