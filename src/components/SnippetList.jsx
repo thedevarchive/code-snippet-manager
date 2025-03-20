@@ -46,6 +46,38 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
     }
   };
 
+  // function for handling the type of language to be read by syntax highlighter
+  const handleLanguage = (l) => {
+    if (l) {
+      switch(l) {
+        case "asp.net": 
+          return "aspnet"; 
+        case "brainfck": 
+        case "brainf*ck": 
+        case "brainf**k": 
+        case "brainfvck": 
+        case "branflakes": 
+        case "brainfrick": 
+        case "brainfreak": 
+        case "brainoof": 
+        case "brainf": 
+        case "bf": 
+          return "brainfuck"; 
+        case "c#": 
+          return "csharp"; 
+        case "c++": 
+          return "cpp"; 
+        case "f#": 
+          return "fsharp"; 
+        case "objective c": 
+          return "objectivec"; 
+        default: 
+          return l; 
+      }
+    }
+    else return "javascript"; 
+  }
+
   // save any edits to a snippet
   const handleSave = (index) => {
     // Find the original index in the full snippets array
@@ -230,7 +262,7 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
                     i.e. prevent editing when user is viewing a snippet */}
                 <Typography variant="h6">{snippet.title} ({snippet.language}) - <strong>{snippet.category}</strong></Typography>
                 <SyntaxHighlighter
-                  language={snippet.language.toLowerCase() || "javascript"}
+                  language={handleLanguage(snippet.language.toLowerCase())}
                   style={theme}
                   showLineNumbers={false}
                   wrapLines={true}
