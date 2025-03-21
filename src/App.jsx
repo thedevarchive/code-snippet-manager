@@ -18,9 +18,11 @@ import { SnippetForm } from "./components/SnippetForm";
 import { ViewSnippets } from "./pages/ViewSnippets";
 import ManageLanguages from "./pages/ManageLanguages";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { useMediaQuery } from "@mui/material";
 import CssBaseline from '@mui/material/CssBaseline';
 import { AppBar, Toolbar, Typography, Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import CodeIcon from '@mui/icons-material/Code';
+import "./App.css";
 
 // Theme options for syntax highlighting
 const darkThemeOptions = {
@@ -84,6 +86,9 @@ function App() {
     const languageMatch = selectedLanguage === "All" || s.language === selectedLanguage;
     return categoryMatch && languageMatch;
   });
+
+  // boolean value that checks if website is viewed using a mobile device 
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   // simple functions to add snippets and languages and delete snippets to be included in the components 
   // add a snippet to the list
@@ -219,40 +224,50 @@ function App() {
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
       <Router>
-        <div className="App" style={{
+        <div style={{
           backgroundColor: isDarkMode ? '#282c34' : '#f7f7f7',
-          color: isDarkMode ? '#ffffff' : '#000000',
-          minHeight: '100vh',
-          position: 'absolute',
-          width: '100%',
-          top: 0,
-          left: 0
+          color: isDarkMode ? '#ffffff' : '#000000'
         }}>
           {/* AppBar component */}
-          <AppBar position="static" sx={{ backgroundColor: isDarkMode ? '#2d2d2d' : '#e0e0e0', boxShadow: 'none' }}>
-            <Toolbar>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', flexGrow: 1 }}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <CodeIcon sx={{ fontSize: 32, color: isDarkMode ? '#e2e8f0' : '#2d3748', mr: 2, mt: 2.5 }} />
-                  <Typography variant="h6" component="div" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748' }}>
-                    Code Snippet Manager
-                  </Typography>
-                </div>
-                <Typography
-                  variant="subtitle2"
-                  sx={{
-                    color: isDarkMode ? '#a0aec0' : '#4a5568',
-                    ml: 6,
-                    mt: -1.5,
-                    fontStyle: 'italic',
-                    pb: 1
-                  }}
-                >
-                  Save your source code snippets in any programming language in one place
-                </Typography>
-              </div>
+          <AppBar className="appbar" position="static" sx={{ backgroundColor: isDarkMode ? '#2d2d2d' : '#e0e0e0' }}>
+            <Toolbar className="toolbar">
+              {
+                /* Do not show subtitle when viewing website in mobile
+                  Also show hamburger menu in mobile */
+                isMobile ? (
+                  <div className="outer-title-div">
+                    <div className="inner-title-div">
+                      <CodeIcon sx={{ fontSize: 32, color: isDarkMode ? '#e2e8f0' : '#2d3748', marginRight: "10px"}} />
+                      <Typography variant="h6" component="div" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748' }}>
+                        Code Snippet Manager
+                      </Typography>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="outer-title-div">
+                    <div className="inner-title-div">
+                      <CodeIcon sx={{ fontSize: 32, color: isDarkMode ? '#e2e8f0' : '#2d3748', mr: 2, mt: 2.5 }} />
+                      <Typography variant="h6" component="div" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748' }}>
+                        Code Snippet Manager
+                      </Typography>
+                    </div>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{
+                        color: isDarkMode ? '#a0aec0' : '#4a5568',
+                        ml: 6,
+                        mt: -1.5,
+                        fontStyle: 'italic',
+                        pb: 1
+                      }}
+                    >
+                      Save your source code snippets in any programming language in one place
+                    </Typography>
+                  </div>
+                )
+              }
               {/* Theme selector, show different themes based on dark/light mode */}
-              <FormControl size="small" sx={{ minWidth: 120, mr: 2, mt: 0.75 }}>
+              <FormControl className="theme-selector" size="small" sx={{ minWidth: 120, mr: 2, mt: 0.75 }}>
                 <InputLabel sx={{ color: isDarkMode ? '#a0aec0' : '#4a5568' }}>Theme</InputLabel>
                 <Select
                   value={isDarkMode ? darkTheme : lightTheme}
@@ -283,27 +298,35 @@ function App() {
                 </Select>
               </FormControl>
               {/* Toggle dark/light mode */}
-              <Tooltip title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}>
-                <IconButton
-                  onClick={toggleMode}
-                  sx={{
-                    color: isDarkMode ? '#e2e8f0' : '#2d3748',
-                    mt: 0.75,
-                    '&:hover': {
-                      backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                    }
-                  }}
-                >
-                  {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-                </IconButton>
-              </Tooltip>
-              <Button color="inherit" component={NavLink} to="/" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+              {
+                isMobile ? (
+                  <Button className="nav-button" color="inherit" onClick={toggleMode} sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+                    {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                  </Button>
+                ) : (
+                  <Tooltip title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}>
+                    <IconButton
+                      onClick={toggleMode}
+                      sx={{
+                        color: isDarkMode ? '#e2e8f0' : '#2d3748',
+                        mt: 0.75,
+                        '&:hover': {
+                          backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+                        }
+                      }}
+                    >
+                      {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+                    </IconButton>
+                  </Tooltip>
+                )
+              }
+              <Button className="nav-button" color="inherit" component={NavLink} to="/" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
                 View Snippets
               </Button>
-              <Button color="inherit" component={NavLink} to="/add" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+              <Button className="nav-button" color="inherit" component={NavLink} to="/add" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
                 Add Snippet
               </Button>
-              <Button color="inherit" component={NavLink} to="/languages" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+              <Button className="nav-button" color="inherit" component={NavLink} to="/languages" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
                 Manage Languages
               </Button>
             </Toolbar>

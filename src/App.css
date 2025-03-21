@@ -1,42 +1,37 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.appbar {
+  box-shadow: none;
 }
 
-body {
-  min-height: 100vh;
-  background-color: #f5f5f5; /* Light mode: Soft gray instead of pure white */
-  color: #2d3748; /* Dark gray text for better readability */
-  transition: background-color 0.3s ease, color 0.3s ease;
+.inner-title-div {
+  display: flex;
+  align-items: center;
 }
 
-body.dark-mode {
-  background-color: #1a1a1a; /* Dark mode: Softer black */
-  color: #e2e8f0; /* Light gray text for dark mode */
-}
-
-.App {
-  text-align: center;
-  min-height: 100vh;
-}
-
-.App-header {
+.outer-title-div {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  font-size: calc(10px + 2vmin);
+  align-items: flex-start;
+  flex-grow: 1;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 600px) {
+  .inner-title-div {
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .toolbar {
+    flex-direction: column; /* Stack items vertically on small screens */
+    align-items: flex-start; /* Align items to the start */
+  }
+
+  .nav-button {
+    margin: 4px 0; /* Space between buttons */
+    width: 100%; /* Full width for buttons */
+  }
+
+  .theme-selector {
+    width: 100%; /* Full width for theme selector */
+    margin-bottom: 8px; /* Space below theme selector */
   }
 }
