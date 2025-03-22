@@ -1,3 +1,7 @@
+.App {
+  min-height: 100vh;
+}
+
 .appbar {
   box-shadow: none;
 }
@@ -14,15 +18,39 @@
   flex-grow: 1;
 }
 
+.snippet-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+textarea {
+  width: 100%; 
+  min-height: 200px;
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  resize: vertical;
+  box-sizing: border-box;
+  line-height: 1.5;
+  white-space: pre;
+  overflow: auto;
+  display: block;
+}
+
 @media (max-width: 600px) {
   .inner-title-div {
     margin-top: 20px;
     margin-bottom: 20px;
+    white-space: nowrap;
   }
 
   .toolbar {
+    display: flex;
     flex-direction: column; /* Stack items vertically on small screens */
     align-items: flex-start; /* Align items to the start */
+    justify-content: space-between;
   }
 
   .nav-button {
@@ -32,6 +60,18 @@
 
   .theme-selector {
     width: 100%; /* Full width for theme selector */
-    margin-bottom: 8px; /* Space below theme selector */
+    margin-top: 180px; /* Space below theme selector */
+  }
+
+  .snippet-form-field {
+    width: 120%;
+  }
+
+  form {
+    margin-left: -22%;
+  }
+
+  h2 {
+    margin-left: -22%;
   }
 }

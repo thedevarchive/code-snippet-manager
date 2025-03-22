@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import {
@@ -18,10 +18,10 @@ import { SnippetForm } from "./components/SnippetForm";
 import { ViewSnippets } from "./pages/ViewSnippets";
 import ManageLanguages from "./pages/ManageLanguages";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useMediaQuery } from "@mui/material";
 import CssBaseline from '@mui/material/CssBaseline';
-import { AppBar, Toolbar, Typography, Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, FormControl, InputLabel, Drawer, MenuItem, Select } from "@mui/material";
 import CodeIcon from '@mui/icons-material/Code';
+import MenuIcon from '@mui/icons-material/Menu';
 import "./App.css";
 
 // Theme options for syntax highlighting
@@ -57,6 +57,9 @@ function App() {
   // states for filtering snippets
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedLanguage, setSelectedLanguage] = useState("All");
+
+  //state for opening drawer in mobile 
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   // states for setting theme of web app
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -224,7 +227,7 @@ function App() {
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
       <Router>
-        <div style={{
+        <div className="App" style={{
           backgroundColor: isDarkMode ? '#282c34' : '#f7f7f7',
           color: isDarkMode ? '#ffffff' : '#000000'
         }}>
@@ -237,10 +240,13 @@ function App() {
                 isMobile ? (
                   <div className="outer-title-div">
                     <div className="inner-title-div">
-                      <CodeIcon sx={{ fontSize: 32, color: isDarkMode ? '#e2e8f0' : '#2d3748', marginRight: "10px"}} />
+                      <CodeIcon sx={{ fontSize: 32, color: isDarkMode ? '#e2e8f0' : '#2d3748', ml: "-10%", mr: "10px" }} />
                       <Typography variant="h6" component="div" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748' }}>
                         Code Snippet Manager
                       </Typography>
+                      <IconButton onClick={() => setDrawerOpen(true)} sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', ml: "18%" }}>
+                        <MenuIcon />
+                      </IconButton>
                     </div>
                   </div>
                 ) : (
@@ -266,69 +272,111 @@ function App() {
                   </div>
                 )
               }
-              {/* Theme selector, show different themes based on dark/light mode */}
-              <FormControl className="theme-selector" size="small" sx={{ minWidth: 120, mr: 2, mt: 0.75 }}>
-                <InputLabel sx={{ color: isDarkMode ? '#a0aec0' : '#4a5568' }}>Theme</InputLabel>
-                <Select
-                  value={isDarkMode ? darkTheme : lightTheme}
-                  onChange={(e) => {
-                    const newThemeName = e.target.value;
-                    if (isDarkMode) {
-                      setDarkTheme(newThemeName);
-                    } else {
-                      setLightTheme(newThemeName);
-                    }
-                  }}
-                  label="Theme"
-                  sx={{
-                    color: isDarkMode ? '#e2e8f0' : '#2d3748',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: isDarkMode ? '#4a5568' : '#cbd5e0',
-                    },
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: isDarkMode ? '#718096' : '#a0aec0',
-                    },
-                  }}
-                >
-                  {Object.keys(isDarkMode ? darkThemeOptions : lightThemeOptions).map((themeName) => (
-                    <MenuItem key={themeName} value={themeName}>
-                      {themeName}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
               {/* Toggle dark/light mode */}
               {
                 isMobile ? (
-                  <Button className="nav-button" color="inherit" onClick={toggleMode} sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
-                    {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                  </Button>
+                  <Drawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                    <FormControl className="theme-selector" size="small" sx={{ minWidth: 120, mr: 2, mt: 2 }}>
+                      <InputLabel sx={{ color: isDarkMode ? '#a0aec0' : '#4a5568' }}>Theme</InputLabel>
+                      <Select
+                        value={isDarkMode ? darkTheme : lightTheme}
+                        onChange={(e) => {
+                          const newThemeName = e.target.value;
+                          if (isDarkMode) {
+                            setDarkTheme(newThemeName);
+                          } else {
+                            setLightTheme(newThemeName);
+                          }
+                        }}
+                        label="Theme"
+                        sx={{
+                          color: isDarkMode ? '#e2e8f0' : '#2d3748',
+                          '& .MuiOutlinedInput-notchedOutline': {
+                            borderColor: isDarkMode ? '#4a5568' : '#cbd5e0',
+                          },
+                          '&:hover .MuiOutlinedInput-notchedOutline': {
+                            borderColor: isDarkMode ? '#718096' : '#a0aec0',
+                          },
+                        }}
+                      >
+                        {Object.keys(isDarkMode ? darkThemeOptions : lightThemeOptions).map((themeName) => (
+                          <MenuItem key={themeName} value={themeName}>
+                            {themeName}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <Button className="nav-button" color="inherit" onClick={toggleMode} sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+                      {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                    </Button>
+                    <Button className="nav-button" color="inherit" component={NavLink} to="/" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+                      View Snippets
+                    </Button>
+                    <Button className="nav-button" color="inherit" component={NavLink} to="/add" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+                      Add Snippet
+                    </Button>
+                    <Button className="nav-button" color="inherit" component={NavLink} to="/languages" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+                      Manage Languages
+                    </Button>
+                  </Drawer>
                 ) : (
-                  <Tooltip title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}>
-                    <IconButton
-                      onClick={toggleMode}
-                      sx={{
-                        color: isDarkMode ? '#e2e8f0' : '#2d3748',
-                        mt: 0.75,
-                        '&:hover': {
-                          backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                        }
-                      }}
-                    >
-                      {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-                    </IconButton>
-                  </Tooltip>
+                  <>
+                    <FormControl className="theme-selector" size="small" sx={{ minWidth: 120, mr: 2, mt: 0.75 }}>
+                      <InputLabel sx={{ color: isDarkMode ? '#a0aec0' : '#4a5568' }}>Theme</InputLabel>
+                      <Select
+                        value={isDarkMode ? darkTheme : lightTheme}
+                        onChange={(e) => {
+                          const newThemeName = e.target.value;
+                          if (isDarkMode) {
+                            setDarkTheme(newThemeName);
+                          } else {
+                            setLightTheme(newThemeName);
+                          }
+                        }}
+                        label="Theme"
+                        sx={{
+                          color: isDarkMode ? '#e2e8f0' : '#2d3748',
+                          '& .MuiOutlinedInput-notchedOutline': {
+                            borderColor: isDarkMode ? '#4a5568' : '#cbd5e0',
+                          },
+                          '&:hover .MuiOutlinedInput-notchedOutline': {
+                            borderColor: isDarkMode ? '#718096' : '#a0aec0',
+                          },
+                        }}
+                      >
+                        {Object.keys(isDarkMode ? darkThemeOptions : lightThemeOptions).map((themeName) => (
+                          <MenuItem key={themeName} value={themeName}>
+                            {themeName}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <Tooltip title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}>
+                      <IconButton
+                        onClick={toggleMode}
+                        sx={{
+                          color: isDarkMode ? '#e2e8f0' : '#2d3748',
+                          mt: 0.75,
+                          '&:hover': {
+                            backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+                          }
+                        }}
+                      >
+                        {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+                      </IconButton>
+                    </Tooltip>
+                    <Button className="nav-button" color="inherit" component={NavLink} to="/" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+                      View Snippets
+                    </Button>
+                    <Button className="nav-button" color="inherit" component={NavLink} to="/add" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+                      Add Snippet
+                    </Button>
+                    <Button className="nav-button" color="inherit" component={NavLink} to="/languages" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+                      Manage Languages
+                    </Button>
+                  </>
                 )
               }
-              <Button className="nav-button" color="inherit" component={NavLink} to="/" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
-                View Snippets
-              </Button>
-              <Button className="nav-button" color="inherit" component={NavLink} to="/add" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
-                Add Snippet
-              </Button>
-              <Button className="nav-button" color="inherit" component={NavLink} to="/languages" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
-                Manage Languages
-              </Button>
             </Toolbar>
           </AppBar>
           <div className="App-header">

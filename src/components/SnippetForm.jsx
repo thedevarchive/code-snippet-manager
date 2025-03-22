@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TextField, Button, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { CATEGORIES, handleKeyDown } from "../utils/snippetUtils";
 import Tooltip from '@mui/material/Tooltip';
+import "../App.css";
 
 // Form for code snippet creation
 export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
@@ -32,8 +33,9 @@ export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
 
     return (
         // user enters title, language and code in their respective text fields and then clicks Save
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <form className="snippet-form" onSubmit={handleSubmit}>
             <TextField
+                className="snippet-form-field"
                 label="Title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -55,8 +57,9 @@ export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
                 }}
             />
             <FormControl>
-                <InputLabel sx={{ color: isDarkMode ? '#ffffff' : '#000000' }}>Language</InputLabel>
+                <InputLabel className="snippet-form-field" sx={{ color: isDarkMode ? '#ffffff' : '#000000' }}>Language</InputLabel>
                 <Select
+                    className="snippet-form-field"
                     value={language}
                     onChange={(e) => setLanguage(e.target.value)}
                     label="Language"
@@ -79,8 +82,9 @@ export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
                 </Select>
             </FormControl>
             <FormControl>
-                <InputLabel sx={{ color: isDarkMode ? '#ffffff' : '#000000' }}>Category</InputLabel>
+                <InputLabel className="snippet-form-field" sx={{ color: isDarkMode ? '#ffffff' : '#000000' }}>Category</InputLabel>
                 <Select
+                    className="snippet-form-field"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     label="Category"
@@ -103,30 +107,20 @@ export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
                 </Select>
             </FormControl>
             <textarea
+                className="snippet-form-field"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 onKeyDown={(e) => { handleKeyDown(e, code, setCode) }}
                 style={{
-                    width: '100%',
-                    minHeight: '200px',
-                    margin: '20px 0',
-                    padding: '15px',
-                    borderRadius: '4px',
                     backgroundColor: isDarkMode ? '#1a1a1a' : '#f8fafc',
                     color: isDarkMode ? '#e2e8f0' : '#2d3748',
                     border: isDarkMode ? '1px solid #4a5568' : '1px solid #cbd5e0',
-                    fontFamily: 'monospace',
-                    fontSize: '14px',
-                    resize: 'vertical',
-                    boxSizing: 'border-box',
-                    lineHeight: '1.5',
-                    whiteSpace: 'pre',
-                    overflow: 'auto',
-                    display: 'block'
+                    fontFamily: "monospace"
                 }}
             />
             <Tooltip title={tooltipOpen ? "Snippet saved!" : "Save snippet"}>
                 <Button
+                    className="snippet-form-field"
                     type="submit"
                     variant="contained"
                     sx={{
