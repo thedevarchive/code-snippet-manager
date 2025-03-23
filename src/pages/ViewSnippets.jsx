@@ -1,7 +1,6 @@
 import { CATEGORIES } from "../utils/snippetUtils";
 import SnippetList from "../components/SnippetList";
 import CodeIcon from '@mui/icons-material/Code';
-import "../App.css"; 
 
 export const ViewSnippets = ({
     snippets,
@@ -17,7 +16,7 @@ export const ViewSnippets = ({
     filteredSnippets
 }) => {
     return (
-        <div>
+        <div className="component-div">
             <h2>Your Snippets</h2>
             {snippets.length > 0 ? (
                 <>

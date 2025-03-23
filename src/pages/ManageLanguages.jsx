@@ -92,11 +92,11 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
   // get the icon for the corresponding language, if possible
   const getLanguageIcon = (language) => {
     const IconComponent = languageIcons[language.toLowerCase()];
-    return IconComponent ? <IconComponent /> : null;
+    return IconComponent ? <IconComponent /> : <span />;
   };
 
   return (
-    <div style={{ width: "100%", margin: "auto" }}>
+    <div className='manage-languages-div component-div'>
       <Box sx={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
@@ -108,7 +108,9 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
           variant="h5" 
           sx={{ 
             color: isDarkMode ? '#e2e8f0' : '#2d3748', 
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            mr: "8px", 
+            whiteSpace: "nowrap"
           }}
         >
           Manage Languages
@@ -214,7 +216,7 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
           }}
         >
           <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box className="language-box">
               {editingLanguage === language ? (
                 <>
                   <TextField
@@ -263,7 +265,7 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
                 </>
               ) : (
                 <>
-                  <Typography sx={{ flexGrow: 1 }}>{getLanguageIcon(language)} &nbsp; {language}</Typography>
+                  <Typography sx={{ flexGrow: 1, mt: "8px" }}>{getLanguageIcon(language)} &nbsp; {language}</Typography>
                   <Tooltip title="Edit language name">
                     <IconButton 
                       onClick={() => handleEdit(language)}

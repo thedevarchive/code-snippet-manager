@@ -6,9 +6,36 @@
   box-shadow: none;
 }
 
+.component-div {
+  padding-bottom: 20px;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 10px; 
+}
+
+.edit-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
 .inner-title-div {
   display: flex;
   align-items: center;
+}
+
+.language-box {
+  align-items: center;
+  display: flex;
+  gap: 2; 
+}
+
+.manage-languages-div {
+  width: 100%;
+  margin: auto;
 }
 
 .outer-title-div {
@@ -38,6 +65,10 @@
   margin-top: 20px;
 }
 
+span {
+  margin-right: 20px;
+}
+
 textarea {
   width: 100%; 
   min-height: 200px;
@@ -60,11 +91,9 @@ textarea {
     white-space: nowrap;
   }
 
-  .toolbar {
-    display: flex;
-    flex-direction: column; /* Stack items vertically on small screens */
-    align-items: flex-start; /* Align items to the start */
-    justify-content: space-between;
+  .manage-languages-div {
+    margin-left: -24%;
+    width: 145%;
   }
 
   .nav-button {
@@ -83,6 +112,13 @@ textarea {
   .theme-selector {
     width: 100%; /* Full width for theme selector */
     margin-top: 180px; /* Space below theme selector */
+  }
+
+  .toolbar {
+    display: flex;
+    flex-direction: column; /* Stack items vertically on small screens */
+    align-items: flex-start; /* Align items to the start */
+    justify-content: space-between;
   }
 
   form, h2, .snippet-dropdown, .view-snippet-label, .snippet-list {

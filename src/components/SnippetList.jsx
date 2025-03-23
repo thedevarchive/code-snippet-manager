@@ -90,7 +90,7 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
           <CardContent>
             {editingIndex === index ? (
               <>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginBottom: '20px' }}>
+                <div className="edit-content">
                   {/* Show editing form when user is editing a snippet */}
                   <TextField
                     label="Title"
@@ -166,25 +166,13 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
                     handleKeyDown(e, editedSnippet.code, (newCode) => handleInputChange('code', newCode));
                   }}
                   style={{
-                    width: '100%',
-                    minHeight: '200px',
-                    margin: '20px 0',
-                    padding: '15px',
-                    borderRadius: '4px',
                     backgroundColor: isDarkMode ? '#1a1a1a' : '#f8fafc',
                     color: isDarkMode ? '#e2e8f0' : '#2d3748',
                     border: isDarkMode ? '1px solid #4a5568' : '1px solid #cbd5e0',
-                    fontFamily: 'monospace',
-                    fontSize: '14px',
-                    resize: 'vertical',
-                    boxSizing: 'border-box',
-                    lineHeight: '1.5',
-                    whiteSpace: 'pre',
-                    overflow: 'auto',
-                    display: 'block'
+                    fontFamily: 'monospace'
                   }}
                 />
-                <div style={{ display: 'flex', gap: '10px' }}>
+                <div className="edit-buttons">
                   <Tooltip title="Save changes to snippet">
                     <Button
                       onClick={() => handleSave(index)}

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { TextField, Button, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { CATEGORIES, handleKeyDown } from "../utils/snippetUtils";
 import Tooltip from '@mui/material/Tooltip';
-import "../App.css";
 
 // Form for code snippet creation
 export const SnippetForm = ({ onSave, languages, isDarkMode, theme }) => {
