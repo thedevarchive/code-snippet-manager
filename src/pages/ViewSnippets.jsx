@@ -1,6 +1,7 @@
 import { CATEGORIES } from "../utils/snippetUtils";
 import SnippetList from "../components/SnippetList";
 import CodeIcon from '@mui/icons-material/Code';
+import "../App.css"; 
 
 export const ViewSnippets = ({
     snippets,
@@ -21,19 +22,14 @@ export const ViewSnippets = ({
             {snippets.length > 0 ? (
                 <>
                     {/* Filter for categories (e.g. Frontend, Backend, etc.) */}
-                    <label htmlFor="categorySelect">Select Category: &nbsp;</label>
+                    <label className="view-snippet-label" htmlFor="categorySelect">Select Category: &nbsp;</label>
                     <select
+                        className="snippet-dropdown"
                         onChange={(e) => setSelectedCategory(e.target.value)}
                         value={selectedCategory}
                         style={{
-                            padding: "8px",
-                            borderRadius: "4px",
                             backgroundColor: isDarkMode ? "#3b3b3b" : "#ffffff",
-                            border: "1px solid #ccc",
                             color: isDarkMode ? "#ffffff" : "#333",
-                            width: "200px",
-                            fontSize: "16px",
-                            marginBottom: "20px"
                         }}>
                         <option value="All">All</option>
                         {CATEGORIES.map((cat, index) => (
@@ -41,19 +37,14 @@ export const ViewSnippets = ({
                         ))}
                     </select>
                     {/* Filter for languages entered by user */}
-                    <label htmlFor="languageSelect">&nbsp; Select Language: &nbsp;</label>
+                    <label className="view-snippet-label" htmlFor="languageSelect">Select Language: &nbsp;</label>
                     <select
+                        className="snippet-dropdown"
                         onChange={(e) => setSelectedLanguage(e.target.value)}
                         value={selectedLanguage}
                         style={{
-                            padding: "8px",
-                            borderRadius: "4px",
                             backgroundColor: isDarkMode ? "#3b3b3b" : "#ffffff",
-                            border: "1px solid #ccc",
-                            color: isDarkMode ? "#ffffff" : "#333",
-                            width: "200px",
-                            fontSize: "16px",
-                            marginBottom: "20px"
+                            color: isDarkMode ? "#ffffff" : "#333"
                         }}>
                         <option value="All">All</option>
                         {languages.map((lang, index) => (
@@ -62,7 +53,7 @@ export const ViewSnippets = ({
                     </select>
                     {/* Show user's snippets, if any */}
                     {filteredSnippets.length > 0 ? (
-                        <div style={{ marginTop: "20px" }}>
+                        <div className="snippet-list">
                             <SnippetList
                                 snippets={filteredSnippets}
                                 onDelete={onDelete}

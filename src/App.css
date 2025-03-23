@@ -18,10 +18,24 @@
   flex-grow: 1;
 }
 
+.snippet-dropdown {
+  padding: 8px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px;
+  width: 20%; 
+  font-size: 16px; 
+  margin-bottom: 20px; 
+  margin-right: 10px;
+}
+
 .snippet-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.snippet-list {
+  margin-top: 20px;
 }
 
 textarea {
@@ -58,20 +72,20 @@ textarea {
     width: 100%; /* Full width for buttons */
   }
 
+  .snippet-form-field {
+    width: 120%;
+  }
+
+  .snippet-dropdown, .snippet-list {
+    width: 140%;
+  }
+
   .theme-selector {
     width: 100%; /* Full width for theme selector */
     margin-top: 180px; /* Space below theme selector */
   }
 
-  .snippet-form-field {
-    width: 120%;
-  }
-
-  form {
-    margin-left: -22%;
-  }
-
-  h2 {
+  form, h2, .snippet-dropdown, .view-snippet-label, .snippet-list {
     margin-left: -22%;
   }
 }

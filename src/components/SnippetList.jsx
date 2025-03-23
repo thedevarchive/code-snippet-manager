@@ -234,13 +234,13 @@ const SnippetList = ({ snippets, onDelete, theme, isDarkMode, onUpdate, language
                   language={handleLanguage(snippet.language.toLowerCase())}
                   style={theme}
                   showLineNumbers={false}
-                  wrapLines={true}
                   customStyle={{
                     margin: '20px 0',
                     padding: '15px',
                     borderRadius: '4px',
                     boxSizing: 'border-box'
                   }}
+                  wrapLines wrapLongLines
                 >
               {snippet.code}
             </SyntaxHighlighter>
