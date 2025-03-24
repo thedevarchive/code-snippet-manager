@@ -92,7 +92,7 @@ const ManageLanguages = ({ languages, onUpdateLanguage, onDeleteLanguage, onAddL
   // get the icon for the corresponding language, if possible
   const getLanguageIcon = (language) => {
     const IconComponent = languageIcons[language.toLowerCase()];
-    return IconComponent ? <IconComponent /> : <span />;
+    return IconComponent ? <IconComponent /> : <span className='blank' />;
   };
 
   return (

@@ -6,6 +6,10 @@
   box-shadow: none;
 }
 
+.blank {
+  margin-right: 20px;
+}
+
 .component-div {
   padding-bottom: 20px;
 }
@@ -63,10 +67,6 @@
 
 .snippet-list {
   margin-top: 20px;
-}
-
-span {
-  margin-right: 20px;
 }
 
 textarea {
