@@ -51,7 +51,7 @@ function App() {
   });
   const [languages, setLanguages] = useState(() => {
     const storedLanguages = localStorage.getItem("languages");
-    return storedLanguages ? JSON.parse(storedLanguages) : ["C#", "Java", "JavaScript", "Python", "HTML", "CSS", "SQL", "React", "TypeScript"];
+    return storedLanguages ? JSON.parse(storedLanguages) : ["C#", "Java", "JavaScript", "Python", "HTML", "CSS", "MongoDB", "PostgreSQL", "React", "TypeScript"];
   });
 
   // states for filtering snippets
