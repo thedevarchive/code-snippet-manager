@@ -110,7 +110,7 @@ textarea {
   }
 
   .theme-selector {
-    width: 100%; /* Full width for theme selector */
+    width: 95%; /* Full width for theme selector */
     margin-top: 180px; /* Space below theme selector */
   }
 

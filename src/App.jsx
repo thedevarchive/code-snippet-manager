@@ -19,7 +19,7 @@ import { ViewSnippets } from "./pages/ViewSnippets";
 import ManageLanguages from "./pages/ManageLanguages";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { AppBar, Toolbar, Typography, Button, FormControl, InputLabel, Drawer, MenuItem, Select } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, FormControl, InputLabel, Drawer, Menu, MenuItem, Select } from "@mui/material";
 import CodeIcon from '@mui/icons-material/Code';
 import MenuIcon from '@mui/icons-material/Menu';
 import "./App.css";
@@ -92,6 +92,19 @@ function App() {
 
   // boolean value that checks if website is viewed using a mobile device 
   const isMobile = useMediaQuery("(max-width:600px)");
+
+  //anchor for menu
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  // handle opening menu in desktop screen
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  //handle closing menu in desktop screen 
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   // simple functions to add snippets and languages and delete snippets to be included in the components 
   // add a snippet to the list
@@ -275,8 +288,8 @@ function App() {
               {/* Toggle dark/light mode */}
               {
                 isMobile ? (
-                  <Drawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                    <FormControl className="theme-selector" size="small" sx={{ minWidth: 120, mr: 2, mt: 2 }}>
+                  <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                    <FormControl className="theme-selector" size="small" sx={{ minWidth: 120, ml: 1, mr: 1, mt: 2 }}>
                       <InputLabel sx={{ color: isDarkMode ? '#a0aec0' : '#4a5568' }}>Theme</InputLabel>
                       <Select
                         value={isDarkMode ? darkTheme : lightTheme}
@@ -365,15 +378,30 @@ function App() {
                         {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
                       </IconButton>
                     </Tooltip>
-                    <Button className="nav-button" color="inherit" component={NavLink} to="/" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
-                      View Snippets
-                    </Button>
-                    <Button className="nav-button" color="inherit" component={NavLink} to="/add" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
-                      Add Snippet
-                    </Button>
-                    <Button className="nav-button" color="inherit" component={NavLink} to="/languages" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
-                      Manage Languages
-                    </Button>
+                    <IconButton onClick={handleMenuOpen} sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+                      <MenuIcon sx={{ fontSize: 30 }} />
+                    </IconButton>
+                    <Menu
+                      anchorEl={anchorEl}
+                      open={Boolean(anchorEl)}
+                      onClose={handleMenuClose}
+                    >
+                      <MenuItem onClick={handleMenuClose}>
+                        <Button className="nav-button" color="inherit" component={NavLink} to="/" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75, '&:hover': { backgroundColor: 'transparent' } }}>
+                          View Snippets
+                        </Button>
+                      </MenuItem>
+                      <MenuItem onClick={handleMenuClose}>
+                        <Button className="nav-button" color="inherit" component={NavLink} to="/add" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75, '&:hover': { backgroundColor: 'transparent' } }}>
+                          Add Snippet
+                        </Button>
+                      </MenuItem>
+                      <MenuItem onClick={handleMenuClose}>
+                        <Button className="nav-button" color="inherit" component={NavLink} to="/languages" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75, '&:hover': { backgroundColor: 'transparent' } }}>
+                          Manage Languages
+                        </Button>
+                      </MenuItem>
+                    </Menu>
                   </>
                 )
               }
