@@ -39,15 +39,15 @@ Click on Manage Languages in the application's bar and clicking on the plus sign
 ## Managing Programming Languages
 You can edit or delete languages in the Manage Languages page. Click on the pencil icon to edit the name of the language, or click on the bin icon to delete it.
 
+When editing, click on the floppy disc icon to save changes. Otherwise, click on the cross button to revert changes. 
+
+If you delete a language, __all snippets__ using that language will be deleted as well. A confirmation dialog box will appear asking you if you want to confirm deletion, and once you click on Delete, you cannot undo the action. 
+
 ## Saving Code Snippets
 You can save snippets by clicking on the Download button in the __View Snippets__ page. You may save it with any name of your choosing, and after clicking on Save on the dialog box, you will get a JSON file containing the saved snippets and languages. 
 
 ## Loading Code Snippets
 You can upload the JSON file containing the snippets and the languages by clicking on the Upload button in the __View Snippets__ page. If successful, you will be able to see the saved snippets and languages in that file. 
-
-When editing, click on the floppy disc icon to save changes. Otherwise, click on the cross button to revert changes. 
-
-If you delete a language, __all snippets__ using that language will be deleted as well. A confirmation dialog box will appear asking you if you want to confirm deletion, and once you click on Delete, you cannot undo the action. 
 
 # Features
 
