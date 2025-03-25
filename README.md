@@ -47,7 +47,7 @@ If you delete a language, __all snippets__ using that language will be deleted a
 You can save snippets by clicking on the Download button in the __View Snippets__ page. You may save it with any name of your choosing, and after clicking on Save on the dialog box, you will get a JSON file containing the saved snippets and languages. 
 
 ## Loading Code Snippets
-You can upload the JSON file containing the snippets and the languages by clicking on the Upload button in the __View Snippets__ page. If successful, you will be able to see the saved snippets and languages in that file. 
+You can upload the JSON file containing the snippets and the languages by clicking on the Upload button in the __View Snippets__ page. If successful, you will be able to see the file's saved snippets and languages on the website. 
 
 # Features
 
