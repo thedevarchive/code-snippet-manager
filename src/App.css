@@ -121,6 +121,11 @@ textarea {
     justify-content: space-between;
   }
 
+  .view-snippets-header-box {
+    margin-left: 3%;
+    width: 118%;
+  }
+
   form, h2, .snippet-dropdown, .view-snippet-label, .snippet-list {
     margin-left: -22%;
   }

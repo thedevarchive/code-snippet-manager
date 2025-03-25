@@ -1,6 +1,22 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
-import { IconButton, Tooltip, useMediaQuery } from "@mui/material";
+import {
+  IconButton,
+  Tooltip,
+  useMediaQuery,
+  Fab,
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  FormControl,
+  InputLabel,
+  Drawer,
+  Menu,
+  MenuItem,
+  Select,
+  Box
+} from "@mui/material";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import {
@@ -19,9 +35,9 @@ import { ViewSnippets } from "./pages/ViewSnippets";
 import ManageLanguages from "./pages/ManageLanguages";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { AppBar, Toolbar, Typography, Button, FormControl, InputLabel, Drawer, Menu, MenuItem, Select } from "@mui/material";
 import CodeIcon from '@mui/icons-material/Code';
 import MenuIcon from '@mui/icons-material/Menu';
+import DownloadIcon from '@mui/icons-material/Download';
 import "./App.css";
 
 // Theme options for syntax highlighting
@@ -123,6 +139,21 @@ function App() {
   // delete a snippet from the list
   const deleteSnippet = (index) => {
     setSnippets(snippets.filter((_, i) => i !== index));
+  };
+
+  // Download all snippets into JSON file
+  const downloadSnippets = (snippets) => {
+    const json = JSON.stringify(snippets, null, 2); // Pretty print
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "snippets.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   // add a language to the list
@@ -414,19 +445,47 @@ function App() {
                 <Route
                   path="/"
                   element={
-                    <ViewSnippets
-                      snippets={snippets}
-                      languages={languages}
-                      onDelete={deleteSnippet}
-                      onUpdate={handleUpdateSnippet}
-                      isDarkMode={isDarkMode}
-                      theme={theme}
-                      selectedCategory={selectedCategory}
-                      setSelectedCategory={setSelectedCategory}
-                      selectedLanguage={selectedLanguage}
-                      setSelectedLanguage={setSelectedLanguage}
-                      filteredSnippets={filteredSnippets}
-                    />
+                    <>
+                      <Box className="view-snippets-header-box" sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        mb: 1,
+                        mt: 3
+                      }}>
+                        <h2>Your Snippets</h2>
+                        {/* Button for downloading snippets
+                            Located outside of the SnippetList to avoid the snippet filters that prevent app from downloading them */}
+                        <Tooltip title="Download Snippets">
+                          <Fab
+                            size="small"
+                            onClick={() => downloadSnippets(snippets)}
+                            sx={{
+                              backgroundColor: isDarkMode ? '#4caf50' : '#2e7d32',
+                              color: '#ffffff',
+                              '&:hover': {
+                                backgroundColor: isDarkMode ? '#45a049' : '#1b5e20',
+                              }
+                            }}
+                          >
+                            <DownloadIcon />
+                          </Fab>
+                        </Tooltip>
+                      </Box>
+                      <ViewSnippets
+                        snippets={snippets}
+                        languages={languages}
+                        onDelete={deleteSnippet}
+                        onUpdate={handleUpdateSnippet}
+                        isDarkMode={isDarkMode}
+                        theme={theme}
+                        selectedCategory={selectedCategory}
+                        setSelectedCategory={setSelectedCategory}
+                        selectedLanguage={selectedLanguage}
+                        setSelectedLanguage={setSelectedLanguage}
+                        filteredSnippets={filteredSnippets}
+                      />
+                    </>
                   }
                 />
                 {/* only contains the SnippetForm component and props */}

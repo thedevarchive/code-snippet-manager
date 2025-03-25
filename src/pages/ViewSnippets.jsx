@@ -17,7 +17,6 @@ export const ViewSnippets = ({
 }) => {
     return (
         <div className="component-div">
-            <h2>Your Snippets</h2>
             {snippets.length > 0 ? (
                 <>
                     {/* Filter for categories (e.g. Frontend, Backend, etc.) */}
