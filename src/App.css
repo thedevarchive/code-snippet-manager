@@ -10,6 +10,11 @@
   margin-right: 20px;
 }
 
+.button-div {
+  display: flex;
+  gap: 8px; 
+}
+
 .component-div {
   padding-bottom: 20px;
 }
@@ -49,6 +54,12 @@
   flex-grow: 1;
 }
 
+.route-div {
+  width: 50%;
+  margin: auto;
+  padding-top: 20px;
+}
+
 .snippet-dropdown {
   padding: 8px; 
   border: 1px solid #ccc; 
@@ -67,6 +78,10 @@
 
 .snippet-list {
   margin-top: 20px;
+}
+
+input[type="file"] {
+  display: none;
 }
 
 textarea {

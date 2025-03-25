@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
 import {
   IconButton,
@@ -38,6 +38,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import CodeIcon from '@mui/icons-material/Code';
 import MenuIcon from '@mui/icons-material/Menu';
 import DownloadIcon from '@mui/icons-material/Download';
+import UploadIcon from '@mui/icons-material/Upload';
 import "./App.css";
 
 // Theme options for syntax highlighting
@@ -141,9 +142,14 @@ function App() {
     setSnippets(snippets.filter((_, i) => i !== index));
   };
 
-  // Download all snippets into JSON file
-  const downloadSnippets = (snippets) => {
-    const json = JSON.stringify(snippets, null, 2); // Pretty print
+  // Download all snippets and languages into JSON file
+  const downloadSnippets = (snippets, languages) => {
+    const dataToSave = {
+      snippets: snippets,  // Snippets array
+      languages: languages, // Languages array
+    };
+
+    const json = JSON.stringify(dataToSave, null, 2); // Pretty print
     const blob = new Blob([json], { type: "application/json" });
     const url = URL.createObjectURL(blob);
 
@@ -154,6 +160,43 @@ function App() {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+  };
+
+  //ref for hidden file input 
+  const fileInputRef = useRef(null);
+
+  // Function to trigger the file input
+  const handleFabClick = () => {
+    fileInputRef.current.click();
+  };
+
+  // Function to handle file selection
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      loadFromFile(file); // Pass the file to the parent function
+    }
+  };
+
+  // load snippets and languages from JSON file 
+  const loadFromFile = (file) => {
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const parsedData = JSON.parse(e.target.result);
+        if (parsedData.snippets && parsedData.languages) {
+          setSnippets(parsedData.snippets);
+          setLanguages(parsedData.languages);
+        } else {
+          alert("Invalid JSON format");
+        }
+      } catch (error) {
+        alert("Error reading JSON file");
+      }
+    };
+    reader.readAsText(file);
   };
 
   // add a language to the list
@@ -438,85 +481,109 @@ function App() {
               }
             </Toolbar>
           </AppBar>
-          <div className="App-header">
-            {/* Routes for the different pages */}
-            <div style={{ width: "50%", margin: "auto", paddingTop: "20px" }}>
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <>
-                      <Box className="view-snippets-header-box" sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        mb: 1,
-                        mt: 3
-                      }}>
-                        <h2>Your Snippets</h2>
-                        {/* Button for downloading snippets
+          {/* Routes for the different pages */}
+          <div className="route-div">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Box className="view-snippets-header-box" sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      mb: 1,
+                      mt: 3
+                    }}>
+                      <h2>Your Snippets</h2>
+                      {/* Buttons for downloading and uploading snippets
                             Located outside of the SnippetList to avoid the snippet filters that prevent app from downloading them */}
+                      <div className="button-div">
+                        {/* Button will be disabled when no snippets are on the list */}
                         <Tooltip title="Download Snippets">
                           <Fab
                             size="small"
-                            onClick={() => downloadSnippets(snippets)}
+                            onClick={() => downloadSnippets(snippets, languages)}
+                            disabled={snippets.length === 0}
                             sx={{
-                              backgroundColor: isDarkMode ? '#4caf50' : '#2e7d32',
+                              backgroundColor: isDarkMode ? '#64B5F6' : '#2196F3',
                               color: '#ffffff',
                               '&:hover': {
-                                backgroundColor: isDarkMode ? '#45a049' : '#1b5e20',
+                                backgroundColor: isDarkMode ? '#42A5F5' : '#1976D2',
                               }
                             }}
                           >
                             <DownloadIcon />
                           </Fab>
                         </Tooltip>
-                      </Box>
-                      <ViewSnippets
-                        snippets={snippets}
-                        languages={languages}
-                        onDelete={deleteSnippet}
-                        onUpdate={handleUpdateSnippet}
-                        isDarkMode={isDarkMode}
-                        theme={theme}
-                        selectedCategory={selectedCategory}
-                        setSelectedCategory={setSelectedCategory}
-                        selectedLanguage={selectedLanguage}
-                        setSelectedLanguage={setSelectedLanguage}
-                        filteredSnippets={filteredSnippets}
-                      />
-                    </>
-                  }
-                />
-                {/* only contains the SnippetForm component and props */}
-                <Route
-                  path="/add"
-                  element={
-                    <>
-                      <h2>Add Snippet</h2>
-                      <SnippetForm
-                        onSave={addSnippet}
-                        languages={languages}
-                        isDarkMode={isDarkMode}
-                        theme={theme}
-                      />
-                    </>
-                  }
-                />
-                <Route
-                  path="/languages"
-                  element={
-                    <ManageLanguages
+                        {/* When clicked, this Fab triggers hidden input file's upload function */}
+                        <Tooltip title="Upload Snippets from JSON File">
+                          <input
+                            type="file"
+                            ref={fileInputRef}
+                            accept=".json"
+                            onChange={handleFileChange}
+                          />
+                          <Fab
+                            size="small"
+                            onClick={handleFabClick}
+                            sx={{
+                              backgroundColor: isDarkMode ? '#455A64' : '#B0BEC5',
+                              color: '#ffffff',
+                              '&:hover': {
+                                backgroundColor: isDarkMode ? '#546E7A' : '#90CAF9',
+                              }
+                            }}
+                          >
+                            <UploadIcon />
+                          </Fab>
+                        </Tooltip>
+                      </div>
+                    </Box>
+                    <ViewSnippets
+                      snippets={snippets}
                       languages={languages}
-                      onUpdateLanguage={handleUpdateLanguage}
-                      onDeleteLanguage={handleDeleteLanguage}
-                      onAddLanguage={addLanguage}
+                      onDelete={deleteSnippet}
+                      onUpdate={handleUpdateSnippet}
                       isDarkMode={isDarkMode}
+                      theme={theme}
+                      selectedCategory={selectedCategory}
+                      setSelectedCategory={setSelectedCategory}
+                      selectedLanguage={selectedLanguage}
+                      setSelectedLanguage={setSelectedLanguage}
+                      filteredSnippets={filteredSnippets}
                     />
-                  }
-                />
-              </Routes>
-            </div>
+                  </>
+                }
+              />
+              {/* only contains the SnippetForm component and props */}
+              <Route
+                path="/add"
+                element={
+                  <>
+                    <h2>Add Snippet</h2>
+                    <SnippetForm
+                      onSave={addSnippet}
+                      languages={languages}
+                      isDarkMode={isDarkMode}
+                      theme={theme}
+                    />
+                  </>
+                }
+              />
+              <Route
+                path="/languages"
+                element={
+                  <ManageLanguages
+                    languages={languages}
+                    onUpdateLanguage={handleUpdateLanguage}
+                    onDeleteLanguage={handleDeleteLanguage}
+                    onAddLanguage={addLanguage}
+                    isDarkMode={isDarkMode}
+                  />
+                }
+              />
+            </Routes>
           </div>
         </div>
       </Router>
