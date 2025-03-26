@@ -28,15 +28,15 @@ You can also check out the demo [here](https://tda-code-snippets.netlify.app/).
 Go to Add Snippet. Then, name the snippet in the Title field, select the language the snippet uses and then select the appropriate category for the snippet. Finally, enter the snippet in the text area below the aforementioned fields. Once done, click on the Save button. Afterwards, it should say "Saved!" if a new snippet has been added to the list. 
 
 ## Viewing and Managing Code Snippets 
-Click on View Snippets to see all the saved snippets. Use the filters to sort them by category, programming language or both. Click on the pencil icon to edit the snippet and its details, click on the copy button to copy the snippet to the clipboard or click on the bin icon to delete the snippet. Unlike the languages, there will be __no dialog box__ asking you to confirm this decision, so make sure you are certain you want to delete a snippet. 
+Click on View Snippets to see all the saved snippets. Use the filters to sort them by category, language or both. Click on the pencil icon to edit the snippet and its details, click on the copy button to copy the snippet to the clipboard or click on the bin icon to delete the snippet. Unlike the languages, there will be __no dialog box__ asking you to confirm this decision, so make sure you are certain you want to delete a snippet. 
 
 ## Editing Code Snippets
 Feel free to make changes to any of the details of the code snippets. Once you are done, click on the floppy disc icon to save it. If you change your mind, click on the cross icon. 
 
-## Adding a Programming Language
+## Adding a Language
 Click on Manage Languages in the application's bar and clicking on the plus sign. Then, type the name of the language and click on the floppy disc icon to save it. You may also click on the cross if you change your mind. 
 
-## Managing Programming Languages
+## Managing Languages
 You can edit or delete languages in the Manage Languages page. Click on the pencil icon to edit the name of the language, or click on the bin icon to delete it.
 
 When editing, click on the floppy disc icon to save changes. Otherwise, click on the cross button to revert changes. 
@@ -51,7 +51,14 @@ You can upload the JSON file containing the snippets and the languages by clicki
 
 # Features
 
-* (WIP) 
+* Ability to save and organise code languages for multiple snippets
+* Ability to filter snippets by category and language
+* Ability to categorise snippets (Frontend, Backend, Database, Algorithms)
+* Support for different language types (programming language, markup language, etc.)
+* Dark mode and light mode (plus different code themes for each mode) 
+* Syntax highlighting with Prism.js
+* Local storage support
+* JSON import and export (saves languages and snippets) 
 
 # How to Report Issues
 
