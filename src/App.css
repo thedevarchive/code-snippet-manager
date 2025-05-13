@@ -86,7 +86,7 @@ input[type="file"] {
 
 textarea {
   width: 100%; 
-  min-height: 200px;
+  min-height: 20px;
   margin: 20px 0;
   padding: 15px;
   border-radius: 4px;
@@ -143,5 +143,9 @@ textarea {
 
   form, h2, .snippet-dropdown, .view-snippet-label, .snippet-list {
     margin-left: -22%;
+  }
+
+  .translate-input {
+    margin-bottom: 5px;
   }
 }

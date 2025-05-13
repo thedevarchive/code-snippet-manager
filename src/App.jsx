@@ -33,6 +33,7 @@ import { github, githubGist } from "react-syntax-highlighter/dist/esm/styles/hlj
 import { SnippetForm } from "./components/SnippetForm";
 import { ViewSnippets } from "./pages/ViewSnippets";
 import ManageLanguages from "./pages/ManageLanguages";
+import TranslateLanguages from "./pages/TranslateLanguages";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import CodeIcon from '@mui/icons-material/Code';
@@ -405,6 +406,9 @@ function App() {
                     <Button className="nav-button" color="inherit" component={NavLink} to="/languages" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
                       Manage Languages
                     </Button>
+                    <Button className="nav-button" color="inherit" component={NavLink} to="/translate" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+                      Translate Code
+                    </Button>
                   </Drawer>
                 ) : (
                   <>
@@ -473,6 +477,11 @@ function App() {
                       <MenuItem onClick={handleMenuClose}>
                         <Button className="nav-button" color="inherit" component={NavLink} to="/languages" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75, '&:hover': { backgroundColor: 'transparent' } }}>
                           Manage Languages
+                        </Button>
+                      </MenuItem>
+                      <MenuItem onClick={handleMenuClose}>
+                        <Button className="nav-button" color="inherit" component={NavLink} to="/translate" sx={{ color: isDarkMode ? '#e2e8f0' : '#2d3748', mt: 0.75 }}>
+                          Translate Code
                         </Button>
                       </MenuItem>
                     </Menu>
@@ -579,6 +588,15 @@ function App() {
                     onUpdateLanguage={handleUpdateLanguage}
                     onDeleteLanguage={handleDeleteLanguage}
                     onAddLanguage={addLanguage}
+                    isDarkMode={isDarkMode}
+                  />
+                }
+              />
+              <Route
+                path="/translate"
+                element={
+                  <TranslateLanguages
+                    languages={languages}
                     isDarkMode={isDarkMode}
                   />
                 }
